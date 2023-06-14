@@ -6,7 +6,7 @@ export default function Header() {
                     <p className='text-xxl md:text-[44px] text-white font-bold mb-4'>The best digital flashcards and study tools</p>
                     <p className='text-reg lg:text-lg text-white font-reg'>Join over 60 million students using QuizMe's science-backed flashcards, practice tests and expert solutions to improve their grades and reach their goals.</p>
                 </div>
-                <div className='m-8 md:m-11'>
+                <div className='mx-8 mb-8 md:mx-11 md:mb-11'>
                     <button className='px-6 py-3 text-white font-bold bg-[#4255FF] hover:bg-[#0017E6] rounded-lg cursor-pointer'>Sign up for free</button>
                 </div>
             </div>
