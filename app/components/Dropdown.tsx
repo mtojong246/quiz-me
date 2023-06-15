@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import FilterIcon from '@mui/icons-material/Filter';
+import Link from 'next/link';
 
 export default function Dropdown() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -36,7 +37,7 @@ export default function Dropdown() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><FilterIcon className='mr-3'/>Study Set</MenuItem>
+        <Link href='/create-set'><MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><FilterIcon className='mr-3'/>Study Set</MenuItem></Link>
         <MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><FolderOpenIcon className='mr-3'/>Folder</MenuItem>
       </Menu>
     </div>
