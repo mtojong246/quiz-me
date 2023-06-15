@@ -6,9 +6,11 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import FilterIcon from '@mui/icons-material/Filter';
 import Link from 'next/link';
+import { CreateFolder } from './CreateFolder';
 
 export default function Dropdown() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [ checked, setIsChecked ] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -17,7 +19,12 @@ export default function Dropdown() {
     setAnchorEl(null);
   };
 
+  const toggleFolder = () => {
+    setIsChecked(!checked);
+  }
+
   return (
+    <>
     <div>
       <Button
         id="basic-button"
@@ -38,8 +45,10 @@ export default function Dropdown() {
         }}
       >
         <Link href='/create-set'><MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><FilterIcon className='mr-3'/>Study Set</MenuItem></Link>
-        <MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><FolderOpenIcon className='mr-3'/>Folder</MenuItem>
+        <MenuItem onClick={() => {handleClose(); toggleFolder()}} className='text-sm text-slate-600 text-bold'><FolderOpenIcon className='mr-3'/>Folder</MenuItem>
       </Menu>
     </div>
+    <CreateFolder checked={checked} toggleFolder={toggleFolder}/>
+    </>
   );
 }
