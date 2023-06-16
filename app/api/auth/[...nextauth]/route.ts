@@ -3,11 +3,10 @@ import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials"
 import { NextAuthOptions } from 'next-auth';
-import { PrismaClient } from '@prisma/client';
+import axios from 'axios';
 
-const prisma = new PrismaClient();
 
-export const options: NextAuthOptions = {
+export const OPTIONS: NextAuthOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -26,14 +25,16 @@ export const options: NextAuthOptions = {
             async authorize(credentials) {
                 if (!credentials || !credentials.email || !credentials.password ) return null;
 
-                const dbUser = await prisma.user.findFirst({
-                    where: { email: credentials.email }
-                });
+                const payload = {
+                    email: credentials.email,
+                    password: credentials.password,
+                };
 
-                if (dbUser && dbUser.password === credentials.password) {
-                    const { password, created_at, updated_at, id, ...dbUserWithoutPassword } = dbUser;
-                    return dbUserWithoutPassword as any;
-                }
+                const response = await axios.post('http://localhost:3000/api/auth/signin', payload);
+
+                const user = response.data;
+                
+                if(user) return user; 
 
                 return null;
 
@@ -42,6 +43,6 @@ export const options: NextAuthOptions = {
     ],
 }
 
-const handler=NextAuth(options)
+const handler=NextAuth(OPTIONS)
 
 export {handler as GET , handler as POST}
