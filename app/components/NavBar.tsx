@@ -1,5 +1,5 @@
 'use client';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useContext } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
 import Authentication from './Authentication';
@@ -7,17 +7,22 @@ import Dropdown from './Dropdown';
 import Link from 'next/link';
 import { SideMenu } from './SideMenu';
 import { LibraryMenu } from './LibraryMenu';
+import { AuthenticationContext } from '../context/AuthContext';
+import useAuth from '@/hooks/useAuth';
 
 export default function NavBar() {
     const [ isAuthOpen, setIsAuthOpen ] = useState(false);
     const [ isLogin, setIsLogin ] = useState(false);
     const [ isMenu, setIsMenu ] = useState(false);
     const [ isLibrary, setIsLibrary ] = useState(false);
+    const { isLoggedIn, data } = useContext(AuthenticationContext);
 
     const toggleAuth = () => setIsAuthOpen(!isAuthOpen);
     const toggleSignin = () => setIsLogin(!isLogin);
     const toggleMenu = () => setIsMenu(!isMenu);
     const toggleLibrary = () => setIsLibrary(!isLibrary);
+    
+    const { signout } = useAuth();
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         toggleAuth();
@@ -26,6 +31,10 @@ export default function NavBar() {
         }
         return setIsLogin(false);
     }  
+
+    const handleLogout = async (e: MouseEvent<HTMLButtonElement>) => {
+        await signout();
+    }
 
     return (
         <>
@@ -43,8 +52,14 @@ export default function NavBar() {
             </div>
             <div className='flex justify-end items-center gap-2'>
                 <Dropdown />
-                <button className="text-slate-700 text-sm font-bold hover:bg-slate-200 h-10 px-3.5 rounded-lg cursor-pointer" value='Log in' onClick={handleClick}>Log in</button>
-                <button className="text-slate-700 text-sm font-bold bg-[#FFCD1F] hover:bg-[#FFE380] h-10 px-3.5 rounded-lg cursor-pointer" value='Sign up' onClick={handleClick}>Sign up</button>
+                {isLoggedIn ? (
+                    <button className='text-white text-sm font-bold bg-[#4255FF] hover:bg-[#0017E6] h-10 px-7 rounded-lg cursor-pointer' onClick={handleLogout}>Log out</button>
+                ) : (
+                <>
+                    <button className="text-slate-700 text-sm font-bold hover:bg-slate-200 h-10 px-3.5 rounded-lg cursor-pointer" value='Log in' onClick={handleClick}>Log in</button>
+                    <button className="text-slate-700 text-sm font-bold bg-[#FFCD1F] hover:bg-[#FFE380] h-10 px-3.5 rounded-lg cursor-pointer" value='Sign up' onClick={handleClick}>Sign up</button>
+                </>
+                )}
             </div>
         </div>
         {isAuthOpen && <Authentication toggleAuth={toggleAuth} toggleSignin={toggleSignin} isLogin={isLogin}/>}

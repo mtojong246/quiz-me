@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { AuthenticationContext } from '@/app/context/AuthContext';
+import { signOut } from 'next-auth/react';
 
 const useAuth = () => {
     const { setAuthState } = useContext(AuthenticationContext);
@@ -21,7 +22,10 @@ const useAuth = () => {
         }
     }
 
-    const signout = () => {
+    const signout = async () => {
+        await signOut({
+            callbackUrl: 'http://localhost:3000'
+        });
         setAuthState({ data: null, error: null, loading: false });
     }
 

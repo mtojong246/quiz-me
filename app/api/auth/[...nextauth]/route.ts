@@ -6,6 +6,32 @@ import { NextAuthOptions } from 'next-auth';
 import axios from 'axios';
 
 
+// const cookies: Partial<CookiesOptions> = {
+//     sessionToken: {
+//         name: 'next-auth.session-token',
+//         options: {
+//             httpOnly: true,
+//             sameSite: 'none',
+//             path: '/',
+//             domain: process.env.NEXTAUTH_URL,
+//             secure: true,
+//         }
+//     },
+//     callbackUrl: {
+//         name: 'next-auth.callback-url',
+//         options: {
+
+//         },
+//     },
+//     csrfToken: {
+//         name: 'next-auth.csrf-token',
+//         options: {
+
+//         },
+//     }
+// }
+
+
 export const OPTIONS: NextAuthOptions = {
     providers: [
         GoogleProvider({
@@ -35,12 +61,32 @@ export const OPTIONS: NextAuthOptions = {
                 const user = response.data;
                 
                 if(user) return user; 
+                
 
                 return null;
 
             }
         })
     ],
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        strategy: 'jwt',
+        maxAge: 24 * 60 * 60,
+    },
+    // cookies: cookies,
+    callbacks: {
+        async jwt({token, user, account}) {
+            if (account) {
+                token = Object.assign({}, token, { accessToken: account.access_token });
+            }
+            return { ...token, ...user };
+        },
+
+        async session({ session, token, user }) {
+            session.user = token as any;
+            return session;
+        }
+    }
 }
 
 const handler=NextAuth(OPTIONS)
