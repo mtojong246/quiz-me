@@ -1,3 +1,5 @@
+import Recent from "./components/Recent"
+
 export default function Latest() {
     return (
         <div className='bg-slate-50 px-4 py-8 h-screen'>
@@ -13,10 +15,7 @@ export default function Latest() {
             </div>
             <div className='max-w-[1200px] m-auto'>
                 <p className='text-reg font-bold text-slate-700 mb-5'>Recent</p>
-                <div className='p-8 rounded drop-shadow bg-white text-center'>
-                    <p className='text-lg text-slate-700 font-bold mb-1'>You have no study sets yet</p>
-                    <p className='text-reg text-slate-700 font-light'>Sets you create or study will display here</p>
-                </div>
+                <Recent />
             </div>
         </div>
     )

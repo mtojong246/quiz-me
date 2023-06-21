@@ -1,11 +1,17 @@
 'use client';
 import { Card } from './components/Card';
 import { initialSet } from '@/data/mockData';
-import { useState, ChangeEvent } from 'react';
-import { Deck } from './components/Card';
+import { useState, ChangeEvent, useContext } from 'react';
+import { DeckType } from './components/Card';
+import useSave from '@/hooks/useSave';
+import { AuthenticationContext } from '../context/AuthContext';
+import { useSession } from 'next-auth/react';
 
 export default function CreateSet() {
-    const [ deck, setDeck ] = useState<Deck>({
+    const { data: session, update } = useSession();
+    const { data } = useContext(AuthenticationContext);
+    const { createDeck } = useSave();
+    const [ deck, setDeck ] = useState<DeckType>({
         title: '',
         description: '',
         cards: initialSet.map(set => {
@@ -47,6 +53,21 @@ export default function CreateSet() {
         setDeck(newDeck);
     }
 
+    const handleCreate = async () => {
+        if (data) {
+            const response = await createDeck({deck, data});
+            if (session && session.user && session.user.decks) {
+                const newDeck = session?.user?.decks.concat([response]);
+                const newSession = await update({ decks: newDeck });
+                console.log(newSession, newDeck);
+            }
+            return;
+        }
+        console.log('error, no user data available');
+        return;
+    }
+
+    console.log(session)
 
     return (
         <div className='bg-slate-50 p-4 sm:p-8'>
@@ -71,7 +92,7 @@ export default function CreateSet() {
                 </div>
             </div>
             <div className='max-w-[1200px] mx-auto flex justify-end items-center'>
-                <button className='bg-[#4255FF] hover:bg-[#0017E6] px-8 py-5 rounded-lg cursor-pointer text-white font-bold'>Create</button>
+                <button className='bg-[#4255FF] hover:bg-[#0017E6] px-8 py-5 rounded-lg cursor-pointer text-white font-bold' onClick={handleCreate}>Create</button>
             </div>
         </div>
     )

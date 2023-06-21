@@ -2,16 +2,25 @@
 import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from "react";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { Deck, Folder, Card, User } from "@prisma/client";
 
-interface User {
+interface DeckType extends Deck {
+    cards: Card[],
+    user: User,
+    folder: Folder,
+}
+
+export interface UserType {
     username: string,
     email: string,
+    decks?: DeckType[],
+    folders?: Folder[],
 }
 
 interface State {
     loading: boolean,
     error: string | null,
-    data: User | null,
+    data: UserType | null,
 }
 
 interface AuthState extends State {
@@ -39,7 +48,7 @@ export default function AuthContext({ children }: { children: ReactNode }) {
     useEffect(() => {
         if(session) {
             setIsLoggedIn(true);
-            setAuthState({ data: (session as Session).user as User, error: null, loading: false });
+            setAuthState({ data: (session as Session).user as UserType, error: null, loading: false });
             return;
         }
         setIsLoggedIn(false);

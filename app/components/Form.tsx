@@ -8,11 +8,7 @@ import Alert from '@mui/material/Alert';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
-
-interface User {
-    username: string,
-    email: string,
-}
+import { UserType } from '../context/AuthContext';
 
 export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => void, toggleSignin: () => void, isLogin: boolean }) => {
     const { data: session } = useSession();
@@ -58,7 +54,7 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
             });
 
             if(response && !response.error) {
-                setAuthState({ data: (session as Session).user as User, error: null, loading: false });
+                setAuthState({ data: (session as Session).user as UserType, error: null, loading: false });
                 router.push('/latest');
                 toggleAuth();
             } else if (response && response.error) {

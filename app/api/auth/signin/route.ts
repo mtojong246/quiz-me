@@ -8,9 +8,17 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { email, password } = data;
 
-    const dbUser = await prisma.user.findFirst({
-        where: { email }
+    const dbUser = await prisma.user.findUnique({
+        where: { email },
+        select: {
+            username: true,
+            email: true,
+            password: true,
+            decks: true,
+            folders: true,
+        }
     });
+
 
     if(!dbUser) return NextResponse.json({ errorMessage: 'No account exists' }, { status: 404 });
 
@@ -20,6 +28,8 @@ export async function POST(req: Request) {
         return NextResponse.json({
             username: dbUser.username,
             email: dbUser.email,
+            decks: dbUser.decks,
+            folders: dbUser.folders,
         }, {status: 200})
         
     }

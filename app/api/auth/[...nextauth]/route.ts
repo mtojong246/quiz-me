@@ -75,9 +75,12 @@ export const OPTIONS: NextAuthOptions = {
     },
     // cookies: cookies,
     callbacks: {
-        async jwt({token, user, account}) {
+        async jwt({token, user, account, trigger, session}) {
             if (account) {
                 token = Object.assign({}, token, { accessToken: account.access_token });
+            }
+            if (trigger === 'update' && session) {
+                token.decks = session.decks;
             }
             return { ...token, ...user };
         },

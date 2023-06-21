@@ -3,19 +3,19 @@ import { useState, useEffect, ChangeEvent, Dispatch, SetStateAction } from 'reac
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export interface Deck {
+export interface DeckType {
     title: string;
     description: string;
-    cards: Card[];
+    cards: CardType[];
 }
 
-interface Card {
+export interface CardType {
     id: number;
     term: string;
     definition: string;
 }
 
-export const Card = ({ num, deck, setDeck }: { num: number, deck: Deck, setDeck: Dispatch<SetStateAction<Deck>> }) => {
+export const Card = ({ num, deck, setDeck }: { num: number, deck: DeckType, setDeck: Dispatch<SetStateAction<DeckType>> }) => {
     const [ card, setCard ] = useState({
         id: num,
         term: '',

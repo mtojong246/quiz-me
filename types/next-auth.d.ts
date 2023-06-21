@@ -1,4 +1,5 @@
 import NextAuth from "next-auth/next";
+import { Deck, Folder } from "@prisma/client";
 
 declare module "next-auth" {
     /**
@@ -17,6 +18,8 @@ declare module "next-auth" {
     interface User {
       username?: string;
       email?: string | null;
+      decks?: Deck[],
+      folders?: Folder[],
     }
   }
   
