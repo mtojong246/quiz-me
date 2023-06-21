@@ -10,9 +10,12 @@ export default function Recent() {
         <>
         {data?.decks?.length ? (
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
-            {data.decks.map(deck => (
-                <Card key={deck.id} title={deck.title} terms={`${deck.cards ? deck.cards.length : 0}`}/>
-            ))}
+            {data.decks.map((deck, index) => {
+                if (index < 6) {
+                    return <Card key={deck.id} title={deck.title} terms={`${deck.cards ? deck.cards.length : 0}`}/>
+                } 
+                return null;
+            })}
             </div>
         ) : (
             <div className='p-8 rounded drop-shadow bg-white text-center'>

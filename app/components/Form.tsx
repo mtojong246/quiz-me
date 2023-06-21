@@ -5,13 +5,13 @@ import useAuth from '@/hooks/useAuth';
 import { AuthenticationContext } from '../context/AuthContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, useSession, getSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
 import { UserType } from '../context/AuthContext';
 
 export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => void, toggleSignin: () => void, isLogin: boolean }) => {
-    const { data: session } = useSession();
+    //const { data: session } = useSession();
     const router = useRouter();
     const { loading, error, setAuthState } = useContext(AuthenticationContext);
     const { signup } = useAuth()
@@ -54,7 +54,12 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
             });
 
             if(response && !response.error) {
-                setAuthState({ data: (session as Session).user as UserType, error: null, loading: false });
+                const session = await getSession();
+                if (!session) {
+                    console.log('no session found');
+                    return;
+                }
+                setAuthState({ data: session.user as UserType, error: null, loading: false });
                 router.push('/latest');
                 toggleAuth();
             } else if (response && response.error) {

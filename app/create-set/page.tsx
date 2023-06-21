@@ -28,7 +28,7 @@ export default function CreateSet() {
     const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setDeck({
             ...deck,
-            title: e.currentTarget.value,
+            title: e.currentTarget.value.toLowerCase(),
         })
     }
 
@@ -66,8 +66,6 @@ export default function CreateSet() {
         console.log('error, no user data available');
         return;
     }
-
-    console.log(session)
 
     return (
         <div className='bg-slate-50 p-4 sm:p-8'>
