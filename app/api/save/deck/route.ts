@@ -1,27 +1,19 @@
 import { PrismaClient } from "@prisma/client";
-import { DeckType } from "@/app/create-set/components/Card";
+import { DeckType } from "@/app/create-set/page";
 import { NextResponse } from "next/server";
-import { UserType } from "@/app/context/AuthContext";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     const d = await req.json();
 
-    const { deck, data }: { deck: DeckType, data: UserType } = d;
-
-    const user = await prisma.user.findUnique({
-        where: { email: data?.email },
-        select: { id: true }
-    })
-
-    if(!user) return NextResponse.json({errorMessage: 'Cannot find user associated with deck'}, {status: 404});
+    const { deck, id }: { deck: DeckType, id: number } = d;
 
     const newDeck = await prisma.deck.create({
         data: {
             title: deck.title,
             description: deck.description,
-            user_id: user?.id,
+            user_id: id,
         }
     })
 
@@ -44,8 +36,6 @@ export async function POST(req: Request) {
             title: true,
             description: true,
             cards: true,
-            user: true,
-            folder: true,
          }
     })
 

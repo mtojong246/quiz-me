@@ -11,11 +11,10 @@ export async function POST(req: Request) {
     const dbUser = await prisma.user.findUnique({
         where: { email },
         select: {
+            id: true,
             username: true,
             email: true,
             password: true,
-            decks: true,
-            folders: true,
         }
     });
 
@@ -26,10 +25,9 @@ export async function POST(req: Request) {
 
     if (isMatch) {
         return NextResponse.json({
+            id: dbUser.id,
             username: dbUser.username,
             email: dbUser.email,
-            decks: dbUser.decks,
-            folders: dbUser.folders,
         }, {status: 200})
         
     }

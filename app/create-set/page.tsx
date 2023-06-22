@@ -2,14 +2,20 @@
 import { Card } from './components/Card';
 import { initialSet } from '@/data/mockData';
 import { useState, ChangeEvent, useContext } from 'react';
-import { DeckType } from './components/Card';
 import useSave from '@/hooks/useSave';
 import { AuthenticationContext } from '../context/AuthContext';
-import { useSession } from 'next-auth/react';
+import { CardType } from '../context/DeckContext';
+import { DeckContext } from '../context/DeckContext';
+
+export interface DeckType {
+    title: string,
+    description: string, 
+    cards: CardType[],
+}
 
 export default function CreateSet() {
-    const { data: session, update } = useSession();
     const { data } = useContext(AuthenticationContext);
+    const { setDecks }= useContext(DeckContext);
     const { createDeck } = useSave();
     const [ deck, setDeck ] = useState<DeckType>({
         title: '',
@@ -55,11 +61,10 @@ export default function CreateSet() {
 
     const handleCreate = async () => {
         if (data) {
-            const response = await createDeck({deck, data});
-            if (session && session.user && session.user.decks) {
-                const newDeck = session?.user?.decks.concat([response]);
-                const newSession = await update({ decks: newDeck });
-                console.log(newSession, newDeck);
+            const id = data.id;
+            const response = await createDeck({deck, id});
+            if (response) {
+                setDecks(response);
             }
             return;
         }
