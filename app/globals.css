@@ -15,6 +15,30 @@
         scrollbar-width: none;  /* Firefox */
     }
   }
+  @layer components {
+    .card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+      perspective: 600px;
+    }
+    .is-flipped {
+      transform: rotateX(180deg);
+    }
+    .card_front {
+      position: absolute;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+    }
+    .card_back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+      transform: rotateX(180deg);
+    }
+  }
 }
 
 :root {
