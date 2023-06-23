@@ -4,7 +4,7 @@ import FilterIcon from '@mui/icons-material/Filter';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import MiniCard from './components/MiniCard';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, MouseEvent } from 'react';
 import Carousel from './components/Carousel';
 import { DeckContext } from '@/app/context/DeckContext';
 import { DeckType } from '@/app/create-set/page';
@@ -15,17 +15,26 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
     const { decks } = useContext(DeckContext)
     const [ deck, setDeck ] = useState({} as DeckType);
     const [ expand, setExpand ] = useState(false);
+    const [ fullscreen, setFullscreen ] = useState('');
 
     const toggleExpand = () => setExpand(!expand);
 
     useEffect(() => {
         const foundDeck = decks.find(deck => deck.title.toLowerCase() === separatedTitle.toLowerCase());
-        console.log(foundDeck)
         if (foundDeck) {
             setDeck(foundDeck);
         }
         
     }, [decks]);
+
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+        if ((e.target as HTMLButtonElement).value === 'flashcards') {
+            setFullscreen('flashcards')
+        } else if ((e.target as HTMLButtonElement).value === 'learn') {
+            setFullscreen('learn');
+        }
+        toggleExpand();
+    }
 
     return (
         <>
@@ -44,10 +53,10 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                                 <Carousel deck={deck} expand={expand}/>
                             </div>
                             <div className='w-full grid grid-cols-2 gap-4 mb-10 lg:mb-5'>
-                                <button onClick={toggleExpand} className='h-[60px] bg-white rounded-lg drop-shadow flex justify-center items-center cursor-pointer'>
+                                <button value='flashcards' onClick={handleClick} className='h-[60px] bg-white rounded-lg drop-shadow flex justify-center items-center cursor-pointer'>
                                     <p className='font-bold text-sm text-slate-500'><FilterIcon className='mr-3' style={{fontSize: '24px', color: '#4255FF'}}/>Flashcards</p>
                                 </button>
-                                <button className='h-[60px] bg-white rounded-lg drop-shadow flex justify-center items-center cursor-pointer'>
+                                <button value='learn' onClick={handleClick} className='h-[60px] bg-white rounded-lg drop-shadow flex justify-center items-center cursor-pointer'>
                                     <p className='font-bold text-sm text-slate-500'><RotateRightIcon className='mr-3' style={{fontSize: '24px', color: '#4255FF'}}/>Learn</p>
                                 </button>
                             </div>
@@ -71,7 +80,7 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                         </div>
                     </div>
                 </div>
-                {expand && <Fullscreen expand={expand} toggleExpand={toggleExpand} deck={deck}/>}
+                {expand && <Fullscreen expand={expand} toggleExpand={toggleExpand} deck={deck} fullscreen={fullscreen}/>}
             </>
         )}
         </>
