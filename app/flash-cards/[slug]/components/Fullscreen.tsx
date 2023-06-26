@@ -25,7 +25,7 @@ export default function Fullscreen({ expand, toggleExpand, deck, fullscreen }: {
                 {fullscreen === 'flashcards' ? (
                     <Carousel deck={deck} expand={expand}/>
                 ) : (
-                    <Learn deck={deck}/>
+                <Learn deck={deck} toggleExpand={toggleExpand}/>
                 )}
                 </div>
             </div>
