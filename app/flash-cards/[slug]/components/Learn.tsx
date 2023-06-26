@@ -58,7 +58,7 @@ export default function Learn({ deck, toggleExpand }: { deck: DeckType, toggleEx
     }
 
     const handleAnswer = (input: string) => {
-        if (input.toLowerCase() === currentCard.term.toLowerCase()) {
+        if (input.toLowerCase().trim() == currentCard.term.toLowerCase().trim()) {
             return setIsCorrect(true);
         }
         return setIsWrong(true);

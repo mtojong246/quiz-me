@@ -50,7 +50,7 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                         </div>
                         <div className='flex flex-col lg:flex-col-reverse mb-10'>
                             <div>
-                                <Carousel deck={deck} expand={expand}/>
+                                <Carousel deck={deck} expand={expand} toggleExpand={toggleExpand}/>
                             </div>
                             <div className='w-full grid grid-cols-2 gap-4 mb-10 lg:mb-5'>
                                 <button value='flashcards' onClick={handleClick} className='h-[60px] bg-white rounded-lg drop-shadow flex justify-center items-center cursor-pointer'>

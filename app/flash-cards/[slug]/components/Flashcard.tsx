@@ -10,11 +10,17 @@ export default function Flashcard({ currentIndex, card, index, changeCard, setCh
     }
 
     return (
-        <div className={`w-full min-w-full h-full cursor-pointer transition-transform duration-500 ease-in`} style={{transform: `translate(-${currentIndex * 100}%)`}} key={index} onClick={toggleIsFlipped}>
-            <div className='w-full h-full bg-white flex justify-center items-center'>
-                {isFlipped ? card.definition : card.term}
+        <>
+        {card ? (
+            <div className={`w-full min-w-full h-full cursor-pointer transition-transform duration-500 ease-in`} style={{transform: `translate(-${currentIndex * 100}%)`}} key={index} onClick={toggleIsFlipped}>
+                <div className='w-full h-full bg-white flex justify-center items-center'>
+                    {isFlipped ? card.definition : card.term}
+                </div>
             </div>
-        </div>
+        ) : (
+            <></>
+        )}
+        </>
     )
 }
 

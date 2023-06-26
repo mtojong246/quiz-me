@@ -23,7 +23,7 @@ export default function Fullscreen({ expand, toggleExpand, deck, fullscreen }: {
             <div className='px-4 py-10 bg-slate-50 w-full h-full'>
                 <div className='w-full max-w-[1200px] mx-auto'>
                 {fullscreen === 'flashcards' ? (
-                    <Carousel deck={deck} expand={expand}/>
+                    <Carousel deck={deck} expand={expand} toggleExpand={toggleExpand}/>
                 ) : (
                 <Learn deck={deck} toggleExpand={toggleExpand}/>
                 )}
