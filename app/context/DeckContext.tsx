@@ -3,7 +3,16 @@ import { createContext, ReactNode, useState, useEffect, useContext, SetStateActi
 import { AuthenticationContext } from "./AuthContext";
 import { Deck } from "@prisma/client";
 import useData from "@/hooks/useData";
-import { DeckType } from "../create-set/page";
+
+export interface DeckBasic {
+    title: string,
+    description?: string, 
+    cards: CardType[],
+}
+
+export interface DeckType extends Deck {
+    cards: CardType[],
+}
 
 export interface CardType {
     id: number;

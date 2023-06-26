@@ -7,13 +7,14 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useContext, useEffect, useState, MouseEvent } from 'react';
 import Carousel from './components/Carousel';
 import { DeckContext } from '@/app/context/DeckContext';
-import { DeckType } from '@/app/create-set/page';
+import { DeckBasic } from '@/app/context/DeckContext';
 import Fullscreen from './components/Fullscreen';
+import Link from 'next/link';
 
 export default function FlashCards({ params }: { params: { slug: string } }) {
     const separatedTitle = params.slug.replace(/-/g, ' ');
     const { decks } = useContext(DeckContext)
-    const [ deck, setDeck ] = useState({} as DeckType);
+    const [ deck, setDeck ] = useState({} as DeckBasic);
     const [ expand, setExpand ] = useState(false);
     const [ fullscreen, setFullscreen ] = useState('');
 
@@ -22,15 +23,16 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
     useEffect(() => {
         const foundDeck = decks.find(deck => deck.title.toLowerCase() === separatedTitle.toLowerCase());
         if (foundDeck) {
-            setDeck(foundDeck);
+            const { title, description, cards } = foundDeck;
+            setDeck({ title, description: description as string, cards })
         }
         
     }, [decks]);
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-        if ((e.target as HTMLButtonElement).value === 'flashcards') {
+        if ((e.currentTarget as HTMLButtonElement).value === 'flashcards') {
             setFullscreen('flashcards')
-        } else if ((e.target as HTMLButtonElement).value === 'learn') {
+        } else if ((e.currentTarget as HTMLButtonElement).value === 'learn') {
             setFullscreen('learn');
         }
         toggleExpand();
@@ -63,12 +65,12 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                         </div>
                         <div className='w-full flex justify-between items-center mb-10'>
                             <div></div>
-                            <div>
+                            <Link href={`/edit/${params.slug}`}>
                                 <button className='border border-slate-300 rounded-lg bg-white p-2 cursor-pointer'><ModeEditIcon style={{fontSize: '24px', color: '#595959'}}/></button>
-                            </div>
+                            </Link>
                         </div>
                         <div className='w-full mb-10'>
-                            <p className='text-lg font-bold text-slate-700 mb-5'>{`Terms in this set ()`}</p>
+                            <p className='text-lg font-bold text-slate-700 mb-5'>{`Terms in this set (${deck.cards.length})`}</p>
                             <div className='flex flex-col justify-center items-center gap-4'>
                                 {deck.cards.map(card => (
                                     <MiniCard key={card.id} term={card.definition} definition={card.term}/>

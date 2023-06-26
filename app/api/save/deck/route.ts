@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { DeckType } from "@/app/create-set/page";
+import { DeckBasic } from "@/app/context/DeckContext";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function POST(req: Request) {
     const d = await req.json();
 
-    const { deck, id }: { deck: DeckType, id: number } = d;
+    const { deck, id }: { deck: DeckBasic, id: number } = d;
 
     const newDeck = await prisma.deck.create({
         data: {
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         }
     })
 
-    const newCards = deck.cards.map(card => {
+    const newCards = deck.cards.map((card) => {
         return {
             term: card.term,
             definition: card.definition,
@@ -35,6 +35,10 @@ export async function POST(req: Request) {
             id: true,
             title: true,
             description: true,
+            user_id: true,
+            folder_id: true,
+            created_at: true,
+            updated_at: true,
             cards: true,
          }
     })

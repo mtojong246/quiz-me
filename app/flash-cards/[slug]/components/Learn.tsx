@@ -1,5 +1,5 @@
 'use client';
-import { DeckType } from "@/app/create-set/page";
+import { DeckBasic } from "@/app/context/DeckContext";
 import { useState, useEffect, ChangeEvent } from "react";
 import { CardType } from "@/app/context/DeckContext";
 import Alert from '@mui/material/Alert';
@@ -7,7 +7,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-export default function Learn({ deck, toggleExpand }: { deck: DeckType, toggleExpand: () => void }) {
+export default function Learn({ deck, toggleExpand }: { deck: DeckBasic, toggleExpand: () => void }) {
     const [ array, setArray ] = useState<number[]>([]);
     const [ currentCard, setCurrentCard ] = useState<CardType>({} as CardType);
     const [ done, setDone ] = useState(false);

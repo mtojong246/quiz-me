@@ -1,13 +1,14 @@
 'use client';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import { DeckType } from '@/app/create-set/page';
+import { DeckBasic } from '@/app/context/DeckContext';
 import { useState, useEffect } from 'react';
 import Flashcard from './Flashcard';
 import { CardType } from '@/app/context/DeckContext';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
 
 
-export default function Carousel({ deck, expand, toggleExpand }: { deck: DeckType, expand: boolean, toggleExpand: () => void }) {
+export default function Carousel({ deck, expand, toggleExpand }: { deck: DeckBasic, expand: boolean, toggleExpand: () => void }) {
     const { cards } = deck;
     const [ currentIndex, setCurrentIndex ] = useState(0);
     const [ changeCard, setChangeCard ] = useState(false);
@@ -87,12 +88,14 @@ export default function Carousel({ deck, expand, toggleExpand }: { deck: DeckTyp
                     })}
                 </div>
             )}
-            <div className='w-full flex justify-center pb-5 items-center border-b-2 border-slate-300 mb-5 lg:mb-10'>
+            <div className='w-full flex justify-between pb-5 items-center border-b-2 border-slate-300 mb-5 lg:mb-10'>
+                <div></div>
                 <div className='flex justify-center items-center gap-4'>
                     <button className='cursor-pointer' onClick={prev}><ArrowCircleLeftIcon style={{fontSize: '40px', color: '#595959'}}/></button>
                     <p className='font-bold text-sm text-slate-500'>{`${currentIndex+1}/${cards.length}`}</p>
                     <button className='cursor-pointer' onClick={next}><ArrowCircleRightIcon style={{fontSize: '40px', color: '#595959'}}/></button>
                 </div>
+                <button className='cursor-pointer' onClick={() => {setNewArray(); setCurrentIndex(0)}}><ShuffleIcon style={{fontSize: '32px', color: '#595959'}}/></button>
             </div>
             </>
         ) : (

@@ -2,53 +2,53 @@
 import { useState, useEffect, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { DeckBasic } from '@/app/context/DeckContext';
+import { DeckWithId } from '../page';
+import { CardType } from '@/app/context/DeckContext';
 
-export const Card = ({ num, deck, setDeck }: { num: number, deck: DeckBasic, setDeck: Dispatch<SetStateAction<DeckBasic>> }) => {
-    const [ card, setCard ] = useState({
+export const Card = ({ num, card, deck, setDeck }: { num: number, card: CardType, deck: DeckWithId, setDeck: Dispatch<SetStateAction<DeckWithId>> }) => {
+    const [ newCard, setNewCard ] = useState({
         id: num,
-        term: '',
-        definition: '',
+        term: card.term,
+        definition: card.definition,
     });
 
     const [ disabled, setDisabled ] = useState(false);
 
-    const { term, definition } = card;
+    const { term, definition } = newCard;
     
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
 
-        setCard({
-            ...card,
+        setNewCard({
+            ...newCard,
             [name]: value,
         })
     }
 
     const removeCard = () => {
-        const newCards = deck.cards.filter(c => c.id !== card.id);
-        const sortedCards = newCards.map(c => {
-            if (c.id > card.id) {
-                return {
-                    ...c,
-                    id: (c.id)-1,
-                }
-            }
-            return { ...c }
-        })
+        const newCards = deck.cards.filter(c => deck.cards.indexOf(c) !== (num));
 
         const newDeck = {
             ...deck,
-            cards: sortedCards,
+            cards: newCards,
         }
 
         setDeck(newDeck);
     }
 
     useEffect(() => {
+        setNewCard({
+            id: num,
+            term: card.term,
+            definition: card.definition, 
+        })
+    }, [deck.cards.length])
+
+    useEffect(() => {
         const newDeck = {
             ...deck,
             cards: deck.cards.map(c => {
-                if (c.id === card.id) {
+                if (deck.cards.indexOf(c) === (num)) {
                     return {
                         ...c,
                         term,
@@ -74,7 +74,7 @@ export const Card = ({ num, deck, setDeck }: { num: number, deck: DeckBasic, set
     return (
         <div className='bg-white rounded-lg w-full'>
             <div className='flex justify-between items-center py-4 px-6'>
-                <p className='text-reg text-slate-500 font-bold'>{num}</p>
+                <p className='text-reg text-slate-500 font-bold'>{num+1}</p>
                 <button onClick={removeCard} disabled={disabled} className='cursor-pointer'><DeleteOutlineIcon style={{fontSize: '20px', color: `${disabled ? '#b5b5b5' : '#595959'}`}}/></button>
             </div>
             <div className='p-4 border-t border-slate-100 flex flex-col sm:flex-row justify-center sm:justify-evenly items-center gap-4'>
