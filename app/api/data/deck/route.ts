@@ -11,7 +11,11 @@ export async function POST(req: Request) {
         select: {
             id: true,
             title: true,
-            description: true, 
+            description: true,
+            user_id: true,
+            folder_id: true,
+            created_at: true,
+            updated_at: true,
             cards: true,
         }
     })

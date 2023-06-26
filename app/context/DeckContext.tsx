@@ -43,7 +43,7 @@ export default function DeckProvider({ children }: { children: ReactNode }) {
             setIsDeckLoading(true);
             if (data) {
                 const id = data.id;
-                const userDecks = await fetchUserDecks(id)
+                const userDecks: DeckType[] = await fetchUserDecks(id)
                 setDecks(userDecks);
                 setIsDeckLoading(false);
             }
