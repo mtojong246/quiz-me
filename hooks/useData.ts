@@ -20,9 +20,19 @@ const useData = () => {
         }
     }
 
+    const fetchUserFolders = async (id: number) => {
+        try {
+            const response = await axios.post('http://localhost:3000/api/data/folder', { id });
+            return response.data;
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+
     return {
         fetchUserData,
         fetchUserDecks,
+        fetchUserFolders,
     }
 
 }

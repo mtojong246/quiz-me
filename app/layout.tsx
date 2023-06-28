@@ -4,6 +4,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import AuthContext from './context/AuthContext'
 import DeckProvider from './context/DeckContext'
+import FolderProvider from './context/FolderContext'
 import Provider from './Provider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,9 +25,11 @@ export default function RootLayout({
         <Provider>
           <AuthContext>
             <DeckProvider>
-              <NavBar />
-              {children}
-              <Footer />
+              <FolderProvider>
+                <NavBar />
+                {children}
+                <Footer />
+              </FolderProvider>
             </DeckProvider>
           </AuthContext>
         </Provider>

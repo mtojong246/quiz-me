@@ -1,12 +1,9 @@
 'use client';
-import { useContext, useState, useEffect, MouseEvent } from 'react';
-import { DeckContext } from '../context/DeckContext';
-import { AuthenticationContext } from '../context/AuthContext';
-import Link from 'next/link';
+import { useState, useEffect, MouseEvent } from 'react';
+import LibraryDecks from './LibraryDecks';
+import LibraryFolders from './LibraryFolders';
 
 export const LibraryMenu = () => {
-    const { data } = useContext(AuthenticationContext);
-    const { decks, isDeckLoading } = useContext(DeckContext);
     const [ isActive, setIsActive ] = useState('');
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -29,19 +26,10 @@ export const LibraryMenu = () => {
                 <button className='pb-2 cursor-pointer' onClick={handleClick} value='folders'><p className={`text-sm ${isActive === 'folders' ?'text-[#4255FF]':'text-slate-500'} font-bold cursor-pointer`}>Folders</p></button>
             </div>
             <div className='max-h-[300px] overflow-y-scroll'>
-            {isDeckLoading ? (
-                <h1>Loading...</h1>
-            ): (
-            <>
-                {decks.map(deck => (
-                    <Link href={`/flash-cards/${deck.title.replace(/\s+/g, '-').toLowerCase()}`} className="cursor-pointer">
-                        <div className='w-full p-4 hover:bg-gray-200' key={deck.id}>
-                            <p className='text-lg text-slate-700 font-bold'>{deck.title}</p>
-                            <p className='text-xsm text-slate-300'>{data ? data.username : ''}</p>
-                        </div>
-                    </Link>
-                ))}
-            </>
+            {isActive === 'study-sets' ? (
+                <LibraryDecks />
+            ) : (
+                <LibraryFolders />
             )}
             </div>
             <div className='px-4'>
