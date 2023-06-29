@@ -52,7 +52,7 @@ export default function FolderDropdown({ folder, setFolder }: { folder: FolderWi
         </Menu>
       </div>
       <EditFolder isEdit={isEdit} toggleEdit={toggleEdit} folder={folder} setFolder={setFolder}/>
-      <DeleteFolder isDelete={isDelete} toggleDelete={toggleDelete}/>
+      <DeleteFolder isDelete={isDelete} toggleDelete={toggleDelete} folder={folder}/>
     </>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 import AddIcon from '@mui/icons-material/Add';
 import IosShareIcon from '@mui/icons-material/IosShare';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useState, useEffect, useContext } from 'react';
 import { FolderWithDecks } from '@/app/context/FolderContext';
 import { FolderContext } from '@/app/context/FolderContext';

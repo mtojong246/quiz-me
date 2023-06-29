@@ -1,14 +1,23 @@
 'use client';
 import { Fade } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import DeckCard from './DeckCard';
-import { DeckContext } from '@/app/context/DeckContext';
-import { useContext, Dispatch, SetStateAction } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FolderWithId } from '../page';
+import useDelete from '@/hooks/useDelete';
 
-export default function DeleteFolder({ isDelete, toggleDelete }: { isDelete: boolean, toggleDelete: () => void }) {
-    const { decks } = useContext(DeckContext);
+export default function DeleteFolder({ isDelete, toggleDelete, folder }: { isDelete: boolean, toggleDelete: () => void, folder: FolderWithId }) {
+    const router = useRouter();
+    const { deleteFolder } = useDelete();
+
+    const handleDelete = async () => {
+        const response = await deleteFolder({ id: folder.id });
+        if (response) {
+            console.log(response);
+            return router.push('/latest');
+        }
+        console.log('error deleting folder');
+        return;
+    }
 
     return (
         <Fade in={isDelete}>
@@ -20,11 +29,11 @@ export default function DeleteFolder({ isDelete, toggleDelete }: { isDelete: boo
                         <button onClick={toggleDelete}><CloseIcon style={{fontSize: '24px', color: 'white'}}/></button>
                     </div>
                     <div className='w-full p-4 sm:p-8 bg-slate-50'>
-                        <p className='mb-6 text-[26px] sm:text-[30px] text-slate-700 font-bold'>test</p>
+                        <p className='mb-6 text-[26px] sm:text-[30px] text-slate-700 font-bold'>{folder && folder.title}</p>
                         <p className='text-reg text-slate-700 mb-8'>Deleting a folder is a PERMANENT action. This cannot be undone. Are you sure you want to delete this folder? The sets in this folder will not be deleted.</p>
                         <div className='flex flex-col justify-center items-center sm:flex-row sm:justify-between gap-4'>
-                            <button className='w-full sm:w-[250px] py-5 bg-[#303545] text-white font-bold rounded'>Cancel</button>
-                            <button className='w-full sm:w-[250px] py-5 bg-[#FF725B] text-white font-bold rounded'>Delete folder</button>
+                            <button onClick={toggleDelete} className='w-full sm:w-[250px] py-5 bg-[#303545] text-white font-bold rounded'>Cancel</button>
+                            <button onClick={handleDelete} className='w-full sm:w-[250px] py-5 bg-[#FF725B] text-white font-bold rounded'>Delete folder</button>
                         </div>
                     </div>
                 </div>
