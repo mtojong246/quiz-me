@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { FolderBasic } from "@/app/context/FolderContext";
 import { NextResponse } from "next/server";
+import { FolderWithId } from "@/app/folders/[slug]/page";
 
 const prisma = new PrismaClient();
 
@@ -35,5 +36,25 @@ export async function POST(req: Request) {
     if (!updatedFolder) return NextResponse.json({errorMessage: 'Cannot retrieve newly created folder'}, {status: 404});
 
     return NextResponse.json(updatedFolder);
+
+}
+
+export async function PUT(req: Request) {
+    const d = await req.json();
+
+    const { id, folder }: { id: number, folder: FolderWithId } = d;
+
+    const updatedFolder = await prisma.folder.update({
+        where: { id },
+        data: {
+            title: folder.title,
+            description: folder.description,
+        }
+    })
+
+    if (!updatedFolder) return NextResponse.json({errorMessage: 'Error updating folder'}, {status: 400});
+
+    return NextResponse.json(updatedFolder);
+
 
 }

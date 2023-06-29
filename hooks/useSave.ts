@@ -1,6 +1,7 @@
 import axios from "axios";
 import { DeckBasic } from "@/app/context/DeckContext";
 import { FolderBasic } from "@/app/context/FolderContext";
+import { FolderWithId } from "@/app/folders/[slug]/page";
 
 
 const useSave = () => {
@@ -50,12 +51,22 @@ const useSave = () => {
         }
     }
 
+    const editFolder = async ({ id, folder }: { id: number, folder: FolderWithId }) => {
+        try {
+            const response = await axios.put('http://localhost:3000/api/save/folder', { id, folder });
+            return response.data;
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+
     return {
         createDeck,
         editDeck,
         createFolder,
         addDeckToFolder,
-        removeDeckFromFolder
+        removeDeckFromFolder,
+        editFolder
     }
 }
 

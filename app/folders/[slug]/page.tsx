@@ -7,6 +7,7 @@ import { FolderWithDecks } from '@/app/context/FolderContext';
 import { FolderContext } from '@/app/context/FolderContext';
 import AddSet from './components/AddSet';
 import Card from '@/app/latest/components/Card';
+import FolderDropdown from './components/FolderDropdown';
 
 export interface FolderWithId extends FolderWithDecks {
     id: number;
@@ -43,7 +44,7 @@ export default function Folders({ params }: { params: { slug: string } }) {
                         <div className='flex justify-start items-center gap-3 mb-5'>
                             <button onClick={toggleChecked} className='rounded-full bg-white border border-slate-300 p-2'><AddIcon style={{fontSize: '24px', color: '#666666'}}/></button>
                             <button className='rounded-full bg-white border border-slate-300 p-2'><IosShareIcon style={{fontSize: '24px', color: '#666666'}}/></button>
-                            <button className='rounded-full bg-white border border-slate-300 p-2'><MoreHorizIcon style={{fontSize: '24px', color: '#666666'}}/></button>
+                            <FolderDropdown folder={folder} setFolder={setFolder}/>
                         </div>
                         {folder.decks ? (
                             <div className='w-full grid grid-cols-1 sm:grid-cols-2 mt-20 gap-4'>
