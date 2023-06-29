@@ -34,7 +34,16 @@ const useSave = () => {
 
     const addDeckToFolder = async ({ id, deck_id }: { id: number, deck_id: number }) => {
         try {
-            const response = await axios.put('http://localhost:3000/api/edit/folder', { id, deck_id });
+            const response = await axios.post('http://localhost:3000/api/edit/folder', { id, deck_id });
+            return response.data;
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+
+    const removeDeckFromFolder = async ({ deck_id }: { deck_id: number }) => {
+        try {
+            const response = await axios.put('http://localhost:3000/api/edit/folder', { deck_id });
             return response.data;
         } catch (error) {
             console.log('error', error)
@@ -45,7 +54,8 @@ const useSave = () => {
         createDeck,
         editDeck,
         createFolder,
-        addDeckToFolder
+        addDeckToFolder,
+        removeDeckFromFolder
     }
 }
 

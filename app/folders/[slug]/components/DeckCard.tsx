@@ -11,7 +11,7 @@ const style = {
 
 export default function DeckCard({ title, folder_id, deck_id, id, folder, setFolder }: { title: string, folder_id: number | null, deck_id: number, id: number, folder: FolderWithId, setFolder: Dispatch<SetStateAction<FolderWithId>>}) {
     const [ isChecked, setIsChecked ] = useState(false);
-    const { addDeckToFolder } = useSave();
+    const { addDeckToFolder, removeDeckFromFolder } = useSave();
 
     useEffect(() => {
         if (folder_id === id) {
@@ -35,6 +35,18 @@ export default function DeckCard({ title, folder_id, deck_id, id, folder, setFol
             console.log('Error adding deck to folder');
             return;
         } 
+        
+        const response = await removeDeckFromFolder({ deck_id });
+        if (response) {
+            setIsChecked(false);
+            const updatedFolder = {
+                ...folder,
+                decks: folder.decks.filter(deck => deck.id !== response.id)
+            }
+            setFolder(updatedFolder);
+            return;
+        }
+        console.log('Error removing deck from folder');
         return;
     }
 
