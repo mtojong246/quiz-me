@@ -47,7 +47,7 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                 <div className='bg-slate-50 p-4 sm:p-8'>
                     <div className='max-w-[1200px] mx-auto mb-20'>
                         <div className='w-full flex justify-between items-center mb-10'>
-                            <p className='text-xl sm:text-xxl text-slate-700 font-bold'>{separatedTitle}</p>
+                            <p className='text-xl sm:text-xxl text-slate-700 font-bold'>{deck.title}</p>
                             <button className='px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-500 text-sm font-bold'>Share</button>
                         </div>
                         <div className='flex flex-col lg:flex-col-reverse mb-10'>

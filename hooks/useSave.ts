@@ -32,10 +32,20 @@ const useSave = () => {
         }
     }
 
+    const addDeckToFolder = async ({ id, deck_id }: { id: number, deck_id: number }) => {
+        try {
+            const response = await axios.put('http://localhost:3000/api/edit/folder', { id, deck_id });
+            return response.data;
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+
     return {
         createDeck,
         editDeck,
-        createFolder
+        createFolder,
+        addDeckToFolder
     }
 }
 

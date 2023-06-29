@@ -5,13 +5,22 @@ import { DeckBasic } from "./DeckContext";
 import useData from "@/hooks/useData";
 import { AuthenticationContext } from "./AuthContext";
 
+export interface DeckWithId extends DeckBasic {
+    id: number;
+    folder_id: number;
+}
+
 export interface FolderBasic {
     title: string;
     description?: string;
 }
 
+export interface FolderWithDecks extends FolderBasic {
+    decks: DeckWithId[];
+}
+
 export interface FolderType extends Folder {
-    decks: DeckBasic[];
+    decks: DeckWithId[];
 }
 
 interface FolderState {

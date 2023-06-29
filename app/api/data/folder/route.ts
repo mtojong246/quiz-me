@@ -12,7 +12,15 @@ export async function POST(req: Request) {
             id: true,
             title: true,
             description: true,
-            decks: true,
+            decks: {
+                select: {
+                    id: true,
+                    title: true,
+                    description: true,
+                    cards: true,
+                    folder_id: true,
+                }
+            },
             user_id: true,
             created_at: true,
             updated_at: true,
