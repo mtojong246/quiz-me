@@ -2,9 +2,11 @@
 import { useState, useEffect, MouseEvent } from 'react';
 import LibraryDecks from './LibraryDecks';
 import LibraryFolders from './LibraryFolders';
+import { useRouter } from 'next/navigation';
 
-export const LibraryMenu = () => {
+export const LibraryMenu = ({ toggleLibrary }: { toggleLibrary: () => void }) => {
     const [ isActive, setIsActive ] = useState('');
+    const router = useRouter();
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         if ((e.currentTarget as HTMLButtonElement).value === 'study-sets') {
@@ -17,7 +19,13 @@ export const LibraryMenu = () => {
 
     useEffect(() => {
         setIsActive('study-sets');
-    }, [])
+    }, []);
+
+    const viewAll = () => {
+        router.push('/user')
+        toggleLibrary();
+    }
+
 
     return (
         <div className='w-[400px] h-fit bg-white rounded-lg border border-slate-200 drop-shadow py-4 absolute left-[120px] top-[70px] z-10 hidden md:block'>
@@ -27,13 +35,13 @@ export const LibraryMenu = () => {
             </div>
             <div className='max-h-[300px] overflow-y-scroll'>
             {isActive === 'study-sets' ? (
-                <LibraryDecks />
+                <LibraryDecks toggleLibrary={toggleLibrary} />
             ) : (
-                <LibraryFolders />
+                <LibraryFolders toggleLibrary={toggleLibrary} />
             )}
             </div>
             <div className='px-4'>
-                <button className='text-reg text-[#4255FF] hover:text-[#0017E6] font-bold cursor-pointer'>View all sets</button>
+                <button onClick={() => viewAll()} className='text-reg text-[#4255FF] hover:text-[#0017E6] font-bold cursor-pointer'>View all sets</button>
             </div>
         </div>
     )

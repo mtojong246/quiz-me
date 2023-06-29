@@ -64,7 +64,7 @@ export default function NavBar() {
         </div>
         {isAuthOpen && <Authentication toggleAuth={toggleAuth} toggleSignin={toggleSignin} isLogin={isLogin}/>}
         {isMenu && <SideMenu toggleMenu={toggleMenu}/>}
-        {isLibrary && <LibraryMenu />}
+        {isLibrary && <LibraryMenu toggleLibrary={toggleLibrary}/>}
         </>
     )
 }

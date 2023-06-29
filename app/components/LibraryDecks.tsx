@@ -5,7 +5,7 @@ import { AuthenticationContext } from '../context/AuthContext';
 import { useContext } from 'react';
 
 
-export default function LibraryDecks() {
+export default function LibraryDecks({ toggleLibrary }: { toggleLibrary: () => void }) {
     const { data } = useContext(AuthenticationContext);
     const { decks, isDeckLoading } = useContext(DeckContext);
     return (
@@ -16,7 +16,7 @@ export default function LibraryDecks() {
             <>
                 {decks.map(deck => (
                     <Link href={`/flash-cards/${deck.title.replace(/\s+/g, '-').toLowerCase()}`} className="cursor-pointer">
-                        <div className='w-full p-4 hover:bg-gray-200' key={deck.id}>
+                        <div className='w-full p-4 hover:bg-gray-200' key={deck.id} onClick={toggleLibrary}>
                             <p className='text-lg text-slate-700 font-bold'>{deck.title}</p>
                             <p className='text-xsm text-slate-300'>{data ? data.username : ''}</p>
                         </div>
