@@ -15,7 +15,7 @@ export default function NavBar() {
     const [ isLogin, setIsLogin ] = useState(false);
     const [ isMenu, setIsMenu ] = useState(false);
     const [ isLibrary, setIsLibrary ] = useState(false);
-    const { isLoggedIn, data } = useContext(AuthenticationContext);
+    const { isLoggedIn } = useContext(AuthenticationContext);
 
     const toggleAuth = () => setIsAuthOpen(!isAuthOpen);
     const toggleSignin = () => setIsLogin(!isLogin);

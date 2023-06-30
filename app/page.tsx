@@ -1,7 +1,20 @@
-import Image from 'next/image'
+'use client';
 import Header from './components/Header'
+import { useContext, useEffect } from 'react';
+import { AuthenticationContext } from './context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const { isLoggedIn } = useContext(AuthenticationContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/latest');
+    }
+    return;
+  }, [])
+
   return (
     <>
       <Header />
