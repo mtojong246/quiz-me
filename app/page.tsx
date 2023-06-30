@@ -13,7 +13,7 @@ export default function Home() {
       router.push('/latest');
     }
     return;
-  }, [])
+  }, [isLoggedIn])
 
   return (
     <>

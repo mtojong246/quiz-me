@@ -31,7 +31,7 @@ export default function UserDropdown({ letter }: { letter: string | undefined })
         }}
       >
         <Link href='/user'><MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><FaceIcon className='mr-3'/>Profile</MenuItem></Link>
-        <MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><SettingsIcon className='mr-3'/>Settings</MenuItem>
+        <Link href='/settings'><MenuItem onClick={handleClose} className='text-sm text-slate-600 text-bold'><SettingsIcon className='mr-3'/>Settings</MenuItem></Link>
       </Menu>
     </div>
     </>
