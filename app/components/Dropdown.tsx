@@ -26,15 +26,7 @@ export default function Dropdown() {
   return (
     <>
     <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <AddCircleIcon style={{fontSize: '40px'}} className="text-[#4255FF] text-[40px] cursor-pointer"/>
-      </Button>
+      <button onClick={handleClick}><AddCircleIcon style={{fontSize: '40px'}} className="text-[#4255FF] text-[40px] cursor-pointer"/></button>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

@@ -57,6 +57,12 @@ export default function Edit({ params }: { params: { slug: string } }) {
     }
 
     const handleEdit = async () => {
+        const foundDeck = decks.find(d => d.id === deck.id);
+        if (foundDeck === deck) {
+            console.log('no change');
+            return router.push('/latest');
+        }
+        
         try {
             const response = await editDeck({ deck });
             if (response) {

@@ -25,7 +25,9 @@ export default function User() {
         <div className='w-full bg-slate-50 min-h-screen'>
             <div className='max-w-[1200px] mx-auto pt-8'>
                 <div className='w-full p-4 sm:p-6 flex justify-start items-center mb-6'>
-                    <div className='rounded-full bg-white h-[64px] w-[64px] mr-6'></div>
+                    <div className='rounded-full bg-pink-400 h-[64px] w-[64px] mr-6 flex justify-center items-center'>
+                        <p className='text-white text-xl'>{data && data.username[0]}</p>
+                    </div>
                     <p className='text-xl text-slate-700 font-bold'>{data && data.username}</p>
                 </div>
                 <div className='w-full p-4 sm:p-6'>

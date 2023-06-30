@@ -9,13 +9,14 @@ import { SideMenu } from './SideMenu';
 import { LibraryMenu } from './LibraryMenu';
 import { AuthenticationContext } from '../context/AuthContext';
 import useAuth from '@/hooks/useAuth';
+import UserDropdown from './UserDropdown';
 
 export default function NavBar() {
     const [ isAuthOpen, setIsAuthOpen ] = useState(false);
     const [ isLogin, setIsLogin ] = useState(false);
     const [ isMenu, setIsMenu ] = useState(false);
     const [ isLibrary, setIsLibrary ] = useState(false);
-    const { isLoggedIn } = useContext(AuthenticationContext);
+    const { isLoggedIn, data } = useContext(AuthenticationContext);
 
     const toggleAuth = () => setIsAuthOpen(!isAuthOpen);
     const toggleSignin = () => setIsLogin(!isLogin);
@@ -51,10 +52,13 @@ export default function NavBar() {
                 </button>
             </div>
             <div className='flex justify-end items-center gap-2'>
-                <Dropdown />
+                <div><Dropdown /></div>
                 {isLoggedIn ? (
-                    <button className='text-white text-sm font-bold bg-[#4255FF] hover:bg-[#0017E6] h-10 px-7 rounded-lg cursor-pointer' onClick={handleLogout}>Log out</button>
-                ) : (
+                <>
+                    <div><UserDropdown letter={data?.username[0]}/></div>
+                    <button className='text-white text-sm font-bold bg-[#4255FF] hover:bg-[#0017E6] h-10 px-7 rounded-lg cursor-pointer' onClick={handleLogout}>Log out</button>  
+                </>
+                    ) : (
                 <>
                     <button className="text-slate-700 text-sm font-bold hover:bg-slate-200 h-10 px-3.5 rounded-lg cursor-pointer" value='Log in' onClick={handleClick}>Log in</button>
                     <button className="text-slate-700 text-sm font-bold bg-[#FFCD1F] hover:bg-[#FFE380] h-10 px-3.5 rounded-lg cursor-pointer" value='Sign up' onClick={handleClick}>Sign up</button>
