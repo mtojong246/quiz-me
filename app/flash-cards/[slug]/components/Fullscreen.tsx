@@ -1,5 +1,5 @@
 'use client';
-import { DeckBasic } from '@/app/context/DeckContext';
+import { DeckType } from '@/app/context/DeckContext';
 import Carousel from './Carousel';
 import CloseIcon from '@mui/icons-material/Close';
 import FilterIcon from '@mui/icons-material/Filter';
@@ -7,7 +7,7 @@ import RotateRightIcon from '@mui/icons-material/RotateRight';
 import Learn from './Learn';
 
 
-export default function Fullscreen({ expand, toggleExpand, deck, fullscreen }: { expand: boolean, toggleExpand: () => void, deck: DeckBasic, fullscreen: string }) {
+export default function Fullscreen({ expand, toggleExpand, deck, fullscreen }: { expand: boolean, toggleExpand: () => void, deck: DeckType, fullscreen: string }) {
     
 
     return (

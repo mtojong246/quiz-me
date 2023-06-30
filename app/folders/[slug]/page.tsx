@@ -7,6 +7,7 @@ import { FolderContext } from '@/app/context/FolderContext';
 import AddSet from './components/AddSet';
 import Card from '@/app/latest/components/Card';
 import FolderDropdown from './components/FolderDropdown';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 export interface FolderWithId extends FolderWithDecks {
     id: number;
@@ -38,7 +39,10 @@ export default function Folders({ params }: { params: { slug: string } }) {
                 {folder ? (
                     <>
                         <p className='text-xsm text-slate-700 sm:text-sm font-bold mb-4'>{folder.decks ? folder.decks.length : 0} {folder.decks && folder.decks.length === 1 ? 'set' : 'sets'}</p>
-                        <p className="text-[26px] text-slate-700 sm:text-[38px] font-bold">{folder.title}</p>
+                        <div className='flex justify-start items-center gap-3'>
+                            <FolderOpenIcon style={{fontSize: '42px', color: '666666'}} className='hidden sm:block'/>
+                            <p className="text-[26px] text-slate-700 sm:text-[38px] font-bold">{folder.title}</p>
+                        </div>
                         <p className='text-reg text-slate-700 mb-4'>{folder.description ? folder.description : ''}</p>
                         <div className='flex justify-start items-center gap-3 mb-5'>
                             <button onClick={toggleChecked} className='rounded-full bg-white border border-slate-300 p-2'><AddIcon style={{fontSize: '24px', color: '#666666'}}/></button>

@@ -27,7 +27,7 @@ model Card {
   term String
   definition String
   deck_id Int
-  deck Deck @relation(fields: [deck_id], references: [id])
+  deck Deck @relation(fields: [deck_id], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

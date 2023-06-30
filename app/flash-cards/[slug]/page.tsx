@@ -7,14 +7,16 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useContext, useEffect, useState, MouseEvent } from 'react';
 import Carousel from './components/Carousel';
 import { DeckContext } from '@/app/context/DeckContext';
-import { DeckBasic } from '@/app/context/DeckContext';
 import Fullscreen from './components/Fullscreen';
 import Link from 'next/link';
+import CardDropdown from './components/CardDropdown';
+import { DeckType } from '@/app/context/DeckContext';
+
 
 export default function FlashCards({ params }: { params: { slug: string } }) {
     const separatedTitle = params.slug.replace(/-/g, ' ');
     const { decks } = useContext(DeckContext)
-    const [ deck, setDeck ] = useState({} as DeckBasic);
+    const [ deck, setDeck ] = useState({} as DeckType);
     const [ expand, setExpand ] = useState(false);
     const [ fullscreen, setFullscreen ] = useState('');
 
@@ -23,8 +25,7 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
     useEffect(() => {
         const foundDeck = decks.find(deck => deck.title.toLowerCase() === separatedTitle.toLowerCase());
         if (foundDeck) {
-            const { title, description, cards } = foundDeck;
-            setDeck({ title, description: description as string, cards })
+            setDeck(foundDeck);
         }
         
     }, [decks]);
@@ -65,9 +66,12 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                         </div>
                         <div className='w-full flex justify-between items-center mb-10'>
                             <div></div>
-                            <Link href={`/edit/${params.slug}`}>
-                                <button className='border border-slate-300 rounded-lg bg-white p-2 cursor-pointer'><ModeEditIcon style={{fontSize: '24px', color: '#595959'}}/></button>
-                            </Link>
+                            <div className='flex justify-end items-center gap-4'>
+                                <Link href={`/edit/${params.slug}`}>
+                                    <button className='border border-slate-300 rounded-lg bg-white p-2 cursor-pointer'><ModeEditIcon style={{fontSize: '24px', color: '#595959'}}/></button>
+                                </Link>
+                                <div><CardDropdown deck={deck}/></div>
+                            </div>
                         </div>
                         <div className='w-full mb-10'>
                             <p className='text-lg font-bold text-slate-700 mb-5'>{`Terms in this set (${deck.cards.length})`}</p>
@@ -78,7 +82,9 @@ export default function FlashCards({ params }: { params: { slug: string } }) {
                             </div>
                         </div>
                         <div className='w-full text-center'>
-                            <button className='bg-[#4255FF] hover:bg-[#0017E6] text-white text-reg font-bold px-8 py-5 rounded-lg cursor-pointer'>Add or Remove Terms</button>
+                            <Link href={`/edit/${params.slug}`}>
+                                <button className='bg-[#4255FF] hover:bg-[#0017E6] text-white text-reg font-bold px-8 py-5 rounded-lg cursor-pointer'>Add or Remove Terms</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

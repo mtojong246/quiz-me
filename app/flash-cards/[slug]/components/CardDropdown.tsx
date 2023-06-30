@@ -1,17 +1,17 @@
 'use client';
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { FolderWithId } from '../page';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { EditFolder } from './EditFolder';
-import DeleteFolder from './DeleteFolder';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useState } from 'react';
+import DeleteCard from './DeleteCard';
+import AddToFolder from './AddToFolder';
+import { DeckType } from '@/app/context/DeckContext';
 
-export default function FolderDropdown({ folder, setFolder }: { folder: FolderWithId, setFolder: Dispatch<SetStateAction<FolderWithId>> }) {
+
+export default function CardDropdown({ deck }: { deck: DeckType }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,16 +20,17 @@ export default function FolderDropdown({ folder, setFolder }: { folder: FolderWi
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [ isEdit, setIsEdit ] = useState(false);
-  const [ isDelete, setIsDelete ] = useState(false);
 
-  const toggleEdit = () => setIsEdit(!isEdit);
+  const [ isDelete, setIsDelete ] = useState(false);
+  const [ isAdd, setIsAdd ] = useState(false);
+
   const toggleDelete = () => setIsDelete(!isDelete);
+  const toggleAdd = () => setIsAdd(!isAdd);
 
   return (
     <>
       <div>
-        <button onClick={handleClick} className='rounded-full bg-white border border-slate-300 p-2'><MoreHorizIcon style={{fontSize: '24px', color: '#666666'}}/></button>
+        <button onClick={handleClick} className='rounded-lg bg-white border border-slate-300 p-2'><MoreHorizIcon style={{fontSize: '24px', color: '#666666'}}/></button>
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
@@ -39,12 +40,12 @@ export default function FolderDropdown({ folder, setFolder }: { folder: FolderWi
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={() => {handleClose(); toggleEdit()}} className='text-sm text-slate-600 text-bold'><ModeEditIcon className='mr-3'/>Edit</MenuItem>
+          <MenuItem onClick={() => {handleClose(); toggleAdd()}} className='text-sm text-slate-600 text-bold'><AddCircleOutlineIcon className='mr-3'/>Add to folder</MenuItem>
           <MenuItem onClick={() => {handleClose(); toggleDelete()}} className='text-sm text-slate-600 text-bold'><DeleteOutlineIcon className='mr-3'/>Delete</MenuItem>
         </Menu>
       </div>
-      <EditFolder isEdit={isEdit} toggleEdit={toggleEdit} folder={folder} setFolder={setFolder}/>
-      <DeleteFolder isDelete={isDelete} toggleDelete={toggleDelete} folder={folder}/>
+      <AddToFolder isAdd={isAdd} toggleAdd={toggleAdd} deck={deck}/>
+      <DeleteCard isDelete={isDelete} toggleDelete={toggleDelete} deck={deck}/>
     </>
   );
 }
