@@ -2,26 +2,31 @@
 import { Fade } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { DeckContext } from '@/app/context/DeckContext';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import useDelete from '@/hooks/useDelete';
-import { DeckWithId } from '../page';
+import { DeckWithId } from '@/app/context/FolderContext';
 
 export default function DeleteCard({ isDelete, toggleDelete, deck }: { isDelete: boolean, toggleDelete: () => void, deck: DeckWithId}) {
+    const [ isLoading, setIsLoading ] = useState(false);
     const { title, id } = deck;
     const router = useRouter();
     const { deleteDeck } = useDelete();
     const { decks, setDecks } = useContext(DeckContext)
 
     const handleDelete = async () => {
+        setIsLoading(true);
         const response = await deleteDeck({ id });
         if (response) {
             const newDecks = decks.filter(deck => deck.id !== response.id)
             setDecks(newDecks);
+            setIsLoading(false);
             return router.push('/latest');
         }
-        console.log('error deleting deck');
+        setIsLoading(false);
+        alert('Error deleting deck');
         return;
     }
 
@@ -39,7 +44,9 @@ export default function DeleteCard({ isDelete, toggleDelete, deck }: { isDelete:
                         <p className='text-reg text-slate-700 mb-8'>You are about to delete this set and all of its data. No one will be able to access this set ever again. <strong>Are you absolutely positive? There's no undo.</strong></p>
                         <div className='flex flex-col justify-center items-center sm:flex-row sm:justify-between gap-4'>
                             <button onClick={toggleDelete} className='w-full sm:w-[250px] py-5 bg-[#303545] text-white font-bold rounded'>Cancel</button>
-                            <button onClick={handleDelete} className='w-full sm:w-[250px] py-5 bg-[#FF725B] text-white font-bold rounded'>Yes, delete set</button>
+                            <button onClick={handleDelete} className='w-full sm:w-[250px] py-5 bg-[#FF725B] text-white font-bold rounded'>
+                            {isLoading ? <CircularProgress color='inherit'/> : 'Yes, delete set'}
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -5,12 +5,14 @@ import { DeckBasic } from '@/app/context/DeckContext';
 import { Card } from './components/Card';
 import { useRouter } from 'next/navigation';
 import useSave from '@/hooks/useSave';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export interface DeckWithId extends DeckBasic {
     id: number;
 }
 
 export default function Edit({ params }: { params: { slug: string } }) {
+    const [ isLoading, setIsLoading ] = useState(false);
     const separatedTitle = params.slug.replace(/-/g, ' ');
     const { decks, setDecks } = useContext(DeckContext)
     const [ deck, setDeck ] = useState({} as DeckWithId);
@@ -62,18 +64,21 @@ export default function Edit({ params }: { params: { slug: string } }) {
             console.log('no change');
             return router.push('/latest');
         }
-        
+        setIsLoading(true);
         try {
             const response = await editDeck({ deck });
             if (response) {
                 const newDecks = decks.filter(deck => deck.id !== response.id);
                 setDecks(newDecks.concat(response))
+                setIsLoading(false);
                 return router.push('/latest');
             }
             console.log('Error editing deck');
+            setIsLoading(false);
             return;
         } catch (error) {
             console.log(error);
+            setIsLoading(false);
             return
         }
     }
@@ -103,7 +108,9 @@ export default function Edit({ params }: { params: { slug: string } }) {
                 </div>
             </div>
             <div className='max-w-[1200px] mx-auto flex justify-end items-center'>
-                <button className='bg-[#4255FF] hover:bg-[#0017E6] px-8 py-5 rounded-lg cursor-pointer text-white font-bold' onClick={handleEdit}>Done</button>
+                <button className='bg-[#4255FF] hover:bg-[#0017E6] px-8 py-5 rounded-lg cursor-pointer text-white font-bold' onClick={handleEdit}>
+                {isLoading ? <CircularProgress color='inherit'/> : "Done"}
+                </button>
             </div>
         </div>
         ) : (

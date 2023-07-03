@@ -15,7 +15,6 @@ export default function Learn({ deck, toggleExpand }: { deck: DeckType, toggleEx
     const [ isCorrect, setIsCorrect ] = useState(false);
     const [ isWrong, setIsWrong ] = useState(false);
     const [ isNeutral, setIsNeutral ] = useState(false);
-    const [ isLoading, setIsLoading ] = useState(false);
     const { cards } = deck;
     
     const create = () => {

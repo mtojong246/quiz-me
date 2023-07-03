@@ -7,9 +7,11 @@ import { AuthenticationContext } from '../context/AuthContext';
 import { DeckBasic } from '../context/DeckContext';
 import { DeckContext } from '../context/DeckContext';
 import { useRouter } from 'next/navigation';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function CreateSet() {
+    const [ isLoading ,setIsLoading ] = useState(false);
     const { data } = useContext(AuthenticationContext);
     const { decks, setDecks }= useContext(DeckContext);
     const { createDeck } = useSave();
@@ -58,11 +60,13 @@ export default function CreateSet() {
 
     const handleCreate = async () => {
         if (data) {
+            setIsLoading(true);
             const id = data.id;
             const response = await createDeck({deck, id});
             if (response) {
                 const newDecks = decks.filter(deck => deck.id !== response.id);
                 setDecks(newDecks.concat(response))
+                setIsLoading(false);
                 return router.push('/latest');
             }
             return;
@@ -94,7 +98,9 @@ export default function CreateSet() {
                 </div>
             </div>
             <div className='max-w-[1200px] mx-auto flex justify-end items-center'>
-                <button className='bg-[#4255FF] hover:bg-[#0017E6] px-8 py-5 rounded-lg cursor-pointer text-white font-bold' onClick={handleCreate}>Create</button>
+                <button className='bg-[#4255FF] hover:bg-[#0017E6] px-8 py-5 rounded-lg cursor-pointer text-white font-bold' onClick={handleCreate}>
+                {isLoading ? <CircularProgress color='inherit'/> : 'Create'}
+                </button>
             </div>
         </div>
     )

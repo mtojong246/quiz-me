@@ -4,18 +4,24 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/navigation';
 import { FolderWithId } from '../page';
 import useDelete from '@/hooks/useDelete';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useState } from 'react';
 
 export default function DeleteFolder({ isDelete, toggleDelete, folder }: { isDelete: boolean, toggleDelete: () => void, folder: FolderWithId }) {
     const router = useRouter();
     const { deleteFolder } = useDelete();
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const handleDelete = async () => {
+        setIsLoading(true);
         const response = await deleteFolder({ id: folder.id });
         if (response) {
             console.log(response);
+            setIsLoading(false);
             return router.push('/latest');
         }
-        console.log('error deleting folder');
+        setIsLoading(false);
+        alert('error deleting folder');
         return;
     }
 
@@ -33,7 +39,9 @@ export default function DeleteFolder({ isDelete, toggleDelete, folder }: { isDel
                         <p className='text-reg text-slate-700 mb-8'>Deleting a folder is a PERMANENT action. This cannot be undone. Are you sure you want to delete this folder? The sets in this folder will not be deleted.</p>
                         <div className='flex flex-col justify-center items-center sm:flex-row sm:justify-between gap-4'>
                             <button onClick={toggleDelete} className='w-full sm:w-[250px] py-5 bg-[#303545] text-white font-bold rounded'>Cancel</button>
-                            <button onClick={handleDelete} className='w-full sm:w-[250px] py-5 bg-[#FF725B] text-white font-bold rounded'>Delete folder</button>
+                            <button onClick={handleDelete} className='w-full sm:w-[250px] py-5 bg-[#FF725B] text-white font-bold rounded'>
+                            {isLoading ? <CircularProgress color='inherit' /> : 'Delete folder'}
+                            </button>
                         </div>
                     </div>
                 </div>
