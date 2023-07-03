@@ -10,7 +10,7 @@ const useAuth = () => {
         setAuthState({ data: null, error: null, loading: true });
 
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/signup', {
+            const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/signup`, {
                 username, 
                 email,
                 password,
@@ -24,7 +24,7 @@ const useAuth = () => {
 
     const signout = async () => {
         await signOut({
-            callbackUrl: 'http://localhost:3000'
+            callbackUrl: `${process.env.NEXTAUTH_URL}`
         });
         setAuthState({ data: null, error: null, loading: false });
     }

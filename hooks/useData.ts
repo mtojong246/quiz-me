@@ -4,7 +4,7 @@ const useData = () => {
 
     const fetchUserData = async ({ email }: { email: string }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/data/user', { email });
+            const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/data/user`, { email });
             return response.data;
         } catch (error) {
             console.log('error', error)
@@ -13,7 +13,7 @@ const useData = () => {
 
     const fetchUserDecks = async (id: number) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/data/deck', { id });
+            const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/data/deck`, { id });
             return response.data;
         } catch (error) {
             console.log('error', error);
@@ -22,7 +22,7 @@ const useData = () => {
 
     const fetchUserFolders = async (id: number) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/data/folder', { id });
+            const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/data/folder`, { id });
             return response.data;
         } catch (error) {
             console.log('error', error);

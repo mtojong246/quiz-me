@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
                     password: credentials.password,
                 };
 
-                const response = await axios.post('http://localhost:3000/api/auth/signin', payload);
+                const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/signin`, payload);
 
                 const user = response.data;
                 
