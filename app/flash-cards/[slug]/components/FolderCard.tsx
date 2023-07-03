@@ -22,7 +22,7 @@ export default function FolderCard({ deck, folder }: { deck: DeckType, folder: F
             return setIsChecked(true);
         }
         return setIsChecked(false);
-    }, [deck.folder_id])
+    }, [deck.folder_id, folder.id])
 
     const handleClick = async () => {
         if (!isChecked) {

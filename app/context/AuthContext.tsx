@@ -18,6 +18,10 @@ interface State {
 interface AuthState extends State {
     setAuthState: Dispatch<SetStateAction<State>>;
     isLoggedIn: boolean,
+    isLogin: boolean,
+    setIsLogin: Dispatch<SetStateAction<boolean>>;
+    isAuthOpen: boolean,
+    toggleAuth: () => void,
 }
 
 export const AuthenticationContext = createContext<AuthState>({
@@ -26,6 +30,10 @@ export const AuthenticationContext = createContext<AuthState>({
     data: null,
     isLoggedIn: false,
     setAuthState: () => {},
+    isLogin: false,
+    setIsLogin: () => {},
+    isAuthOpen: false,
+    toggleAuth: () => {},
 })
 
 export default function AuthContext({ children }: { children: ReactNode }) {
@@ -36,6 +44,9 @@ export default function AuthContext({ children }: { children: ReactNode }) {
         error: null,
     })
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+    const [ isAuthOpen, setIsAuthOpen ] = useState(false);
+    const [ isLogin, setIsLogin ] = useState(false);
+    const toggleAuth = () => setIsAuthOpen(!isAuthOpen);
 
     useEffect(() => {
         if(session) {
@@ -50,6 +61,6 @@ export default function AuthContext({ children }: { children: ReactNode }) {
 
 
     return (
-        <AuthenticationContext.Provider value={{...authState, setAuthState, isLoggedIn}}>{children}</AuthenticationContext.Provider>
+        <AuthenticationContext.Provider value={{...authState, setAuthState, isLoggedIn, isLogin, setIsLogin, isAuthOpen, toggleAuth}}>{children}</AuthenticationContext.Provider>
     )
 }

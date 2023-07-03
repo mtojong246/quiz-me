@@ -12,13 +12,10 @@ import useAuth from '@/hooks/useAuth';
 import UserDropdown from './UserDropdown';
 
 export default function NavBar() {
-    const [ isAuthOpen, setIsAuthOpen ] = useState(false);
-    const [ isLogin, setIsLogin ] = useState(false);
     const [ isMenu, setIsMenu ] = useState(false);
     const [ isLibrary, setIsLibrary ] = useState(false);
-    const { isLoggedIn, data } = useContext(AuthenticationContext);
+    const { isLoggedIn, data, isLogin, setIsLogin, isAuthOpen, toggleAuth } = useContext(AuthenticationContext);
 
-    const toggleAuth = () => setIsAuthOpen(!isAuthOpen);
     const toggleSignin = () => setIsLogin(!isLogin);
     const toggleMenu = () => setIsMenu(!isMenu);
     const toggleLibrary = () => setIsLibrary(!isLibrary);

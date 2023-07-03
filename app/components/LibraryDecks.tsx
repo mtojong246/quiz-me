@@ -7,11 +7,14 @@ import { useContext } from 'react';
 
 export default function LibraryDecks({ toggleLibrary }: { toggleLibrary: () => void }) {
     const { data } = useContext(AuthenticationContext);
-    const { decks, isDeckLoading } = useContext(DeckContext);
+    const { decks } = useContext(DeckContext);
     return (
         <>
-            {isDeckLoading ? (
-                <h1>Loading...</h1>
+            {!decks ? (
+                <div className='w-full h-full flex flex-col justify-center items-center'>
+                <p>Your sets will appear here.</p>
+                <button>Create set</button>
+            </div>
             ): (
             <>
                 {decks.map(deck => (

@@ -41,7 +41,7 @@ export const LibraryMenu = ({ toggleLibrary }: { toggleLibrary: () => void }) =>
             )}
             </div>
             <div className='px-4'>
-                <button onClick={() => viewAll()} className='text-reg text-[#4255FF] hover:text-[#0017E6] font-bold cursor-pointer'>View all sets</button>
+                <button onClick={() => viewAll()} className='text-reg text-[#4255FF] hover:text-[#0017E6] font-bold pt-4'>View all sets</button>
             </div>
         </div>
     )

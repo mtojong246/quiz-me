@@ -4,6 +4,8 @@ import { DeckContext } from '@/app/context/DeckContext';
 import Card from './Card';
 import { DeckType } from '@/app/context/DeckContext';
 
+const numArray = [1,2,3,4,5,6];
+
 export default function Recent() {
     const { decks, isDeckLoading } = useContext(DeckContext);
     const [ sortedDecks, setSortedDecks ] = useState<DeckType[]>([])
@@ -34,11 +36,20 @@ export default function Recent() {
 
     return (
         <>
-        {isDeckLoading || !sortedDecks ? (
-            <h1>Loading...</h1>
+        {isDeckLoading ? (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+            {numArray.map(num => (
+                <div key={num} className='h-[156px] bg-slate-200 rounded animate-pulse'></div>
+            ))}
+            </div>
         ) : (
             <>
-                {decks.length ? (
+                {!sortedDecks.length ? (
+                    <div className='p-8 rounded drop-shadow bg-white text-center'>
+                        <p className='text-lg text-slate-700 font-bold mb-1'>You have no study sets yet</p>
+                        <p className='text-reg text-slate-700 font-light'>Sets you create or study will display here</p>
+                    </div>
+                ) : (
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
                     {sortedDecks.map((deck, index) => {
                         if (index < 6) {
@@ -46,11 +57,6 @@ export default function Recent() {
                         } 
                         return null;
                     })}
-                    </div>
-                ) : (
-                    <div className='p-8 rounded drop-shadow bg-white text-center'>
-                        <p className='text-lg text-slate-700 font-bold mb-1'>You have no study sets yet</p>
-                        <p className='text-reg text-slate-700 font-light'>Sets you create or study will display here</p>
                     </div>
                 )}
             </>

@@ -13,12 +13,14 @@ export default function DeckCard({ title, folder_id, deck_id, id, folder, setFol
     const [ isChecked, setIsChecked ] = useState(false);
     const { addDeckToFolder, removeDeckFromFolder } = useSave();
 
+
     useEffect(() => {
+        
         if (folder_id === id) {
             return setIsChecked(true);
         }
         return setIsChecked(false);
-    }, [folder_id])
+    }, [folder_id, id])
 
     const handleClick = async () => {
         if (!isChecked) {
