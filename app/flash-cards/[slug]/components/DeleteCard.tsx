@@ -7,9 +7,9 @@ import { DeckContext } from '@/app/context/DeckContext';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import useDelete from '@/hooks/useDelete';
-import { DeckWithId } from '@/app/context/FolderContext';
+import { DeckType } from '@/app/context/DeckContext';
 
-export default function DeleteCard({ isDelete, toggleDelete, deck }: { isDelete: boolean, toggleDelete: () => void, deck: DeckWithId}) {
+export default function DeleteCard({ isDelete, toggleDelete, deck }: { isDelete: boolean, toggleDelete: () => void, deck: DeckType}) {
     const [ isLoading, setIsLoading ] = useState(false);
     const { title, id } = deck;
     const router = useRouter();
