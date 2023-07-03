@@ -2,7 +2,7 @@ import Recent from "./components/Recent"
 
 export default function Latest() {
     return (
-        <div className='bg-slate-50 px-4 py-8 h-screen'>
+        <div className='bg-slate-50 px-4 py-8 min-h-screen'>
             <div className='max-w-[1200px] m-auto mb-16'>
                 <p className='text-reg font-bold text-slate-700 mb-5'>Achievements</p>
                 <div className='p-8 rounded drop-shadow bg-white text-center flex flex-col gap-4 md:flex-row-reverse bg-[#FFF2E6]'>

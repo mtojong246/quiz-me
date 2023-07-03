@@ -4,6 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import FolderIcon from '@mui/icons-material/Folder';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export const SideMenu = ({ toggleMenu }: { toggleMenu: () => void }) => {
     const [ library, setLibrary ] = useState(false);
@@ -32,8 +33,8 @@ export const SideMenu = ({ toggleMenu }: { toggleMenu: () => void }) => {
             </div>
             {library ? (
             <div className='my-5 pl-5'>
-                <p className='text-lg text-slate-500 font-bold my-5'>Study sets</p>
-                <p className='text-lg text-slate-500 font-bold my-5'>Folders</p>
+                <Link href='/user' onClick={() => {toggleMenu(); setCreate(false); setLibrary(false)}}><p className='text-lg text-slate-500 font-bold my-5'>Study sets</p></Link>
+                <Link href='/user' onClick={() => {toggleMenu(); setCreate(false); setLibrary(false)}}><p className='text-lg text-slate-500 font-bold my-5'>Folders</p></Link>
             </div>
             ) : null}
             <div className='flex justify-start items-center my-5'>

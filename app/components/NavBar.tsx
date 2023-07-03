@@ -39,7 +39,7 @@ export default function NavBar() {
         <div className='bg-white w-full h-[64px] px-4 flex justify-between items-center'>
             <div className='flex justify-start items-center'>
                 <Link href='/latest'><p className="text-slate-500 text-xl font-bold md:block hidden cursor-pointer mr-4">Quiz<span className='text-[#4255FF]'>Me</span></p></Link>
-                <MenuIcon style={{fontSize: '32px', color: '#595959'}} className='block md:hidden mr-4' onClick={toggleMenu}/>
+                <div className='block md:hidden mr-4'><MenuIcon style={{fontSize: '32px', color: '#595959'}} onClick={toggleMenu}/></div>
                 <Link href='/latest'><p className="text-[#4255FF] text-xl font-bold md:hidden block cursor-pointer mr-4">Q</p></Link>
                 <button className='text-sm text-slate-500 font-bold cursor-pointer hidden md:block' onClick={toggleLibrary}>
                     <div className='flex justify-center align-center gap-1'>
