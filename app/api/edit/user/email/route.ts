@@ -9,6 +9,12 @@ export async function PUT(req: Request) {
 
     const { email, password, id } = d;
 
+    const existingUser = await prisma.user.findUnique({
+        where: { email },
+    })
+
+    if (existingUser) return NextResponse.json({ errorMessage: 'Email is associated with an existing account' }, { status: 400 });
+
     const dbUser = await prisma.user.findFirst({
         where: { id },
         select: {

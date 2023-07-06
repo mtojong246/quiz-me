@@ -58,6 +58,8 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
                     return;
                 }
                 setAuthState({ data: session.user as UserType, error: null, loading: false });
+                router.push('/latest');
+                toggleAuth();
             } else if (response && response.error) {
                 setAuthState({ data: null, error: response.error, loading: false });
                 setPopup(true);
