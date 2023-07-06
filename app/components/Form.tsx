@@ -85,6 +85,10 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
     const handleGoogleSignin = async () => {
         await signIn('google');
     }
+
+    const handleFacebookSignin = async () => {
+        await signIn('facebook');
+    }
     
     return (
         <div className='p-4 bg-white'>
