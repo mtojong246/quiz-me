@@ -25,13 +25,12 @@ export default function ChangeUsername() {
     }
 
     const handleSubmit = async () => {
-        setIsLoading(true);
-        const id = session?.user?.id as number;
         if (!username || !password) {
-            setIsLoading(false);
             alert('Please input a username and password to continue');
             return;
         }
+        const id = session?.user?.id as number;
+        setIsLoading(true);
         const response = await changeUsername({ username, password, id });
         if (response) {
             const newSession = {
@@ -47,7 +46,6 @@ export default function ChangeUsername() {
             alert('Your username has been successfully updated');
         } else {
             setIsLoading(false);
-            setInput(defaultInput);
             alert('Error changing username');
         }
     }
