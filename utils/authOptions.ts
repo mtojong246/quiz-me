@@ -52,8 +52,8 @@ export const authOptions: NextAuthOptions = {
             if (account) {
                 token = Object.assign({}, token, { accessToken: account.access_token });
             }
-            if (trigger === 'update' && session) {
-                token.decks = session.decks;
+            if (trigger === 'update') {
+                return { ...token, ...session.user }
             }
             return { ...token, ...user };
         },
