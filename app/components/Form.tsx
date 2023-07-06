@@ -58,8 +58,6 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
                     return;
                 }
                 setAuthState({ data: session.user as UserType, error: null, loading: false });
-                router.push('/latest');
-                toggleAuth();
             } else if (response && response.error) {
                 setAuthState({ data: null, error: response.error, loading: false });
                 setPopup(true);
@@ -81,6 +79,10 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
             })
         }
     }
+
+    const handleGoogleSignin = async () => {
+        await signIn('google');
+    }
     
     return (
         <div className='p-4 bg-white'>
@@ -96,7 +98,7 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
                     </div>
                 </div>
                 <div className='flex flex-col justify-center items-center my-8 gap-4'>
-                    <button className='w-full rounded-lg border border-slate-150 px-6 py-3 text-reg text-slate-500 font-bold cursor-pointer'>
+                    <button onClick={handleGoogleSignin} className='w-full rounded-lg border border-slate-150 px-6 py-3 text-reg text-slate-500 font-bold cursor-pointer'>
                         <div className='flex justify-center items-center'>
                             <img src='/google-icon.svg' alt='google' className='h-4 w-4 mr-2.5'/>
                             <p>Continue With Google</p>

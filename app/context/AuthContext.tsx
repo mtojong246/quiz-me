@@ -51,14 +51,17 @@ export default function AuthContext({ children }: { children: ReactNode }) {
     useEffect(() => {
         if(session) {
             setIsLoggedIn(true);
-            setAuthState({ data: (session as Session).user as UserType, error: null, loading: false });
+            if (session.user) {
+                const { id, email, username } = session.user;
+                const user = { id, email, username };
+                setAuthState({ data: user as UserType, error: null, loading: false });
+            }
             return;
         }
         setIsLoggedIn(false);
         setAuthState({ data: null, error: null, loading: false })
         return;
     }, [session]);
-
 
     return (
         <AuthenticationContext.Provider value={{...authState, setAuthState, isLoggedIn, isLogin, setIsLogin, isAuthOpen, toggleAuth}}>{children}</AuthenticationContext.Provider>
