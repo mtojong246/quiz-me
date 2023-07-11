@@ -1,3 +1,4 @@
+import { signJwtAccessToken } from "@/jwt";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -18,11 +19,17 @@ export async function POST(req: Request) {
     })
 
     if (existingUser) {
-        return NextResponse.json({
+        const user = {
             id: existingUser.id,
             email: existingUser.email,
             username: existingUser.username,
-        })
+        }
+        const accessToken = signJwtAccessToken(user);
+        const result = {
+            ...user,
+            accessToken,
+        }
+        return NextResponse.json(result, {status: 200})
     }
 
     const newUser = await prisma.user.create({
@@ -36,5 +43,10 @@ export async function POST(req: Request) {
 
     if (!newUser) return NextResponse.json({ errorMessage: 'Error creating new user account' }, { status: 400 });
 
-    return NextResponse.json(newUser);
+    const accessToken = signJwtAccessToken(newUser);
+    const result = {
+        ...newUser,
+        accessToken,
+    }
+    return NextResponse.json(result, {status: 200});
 }

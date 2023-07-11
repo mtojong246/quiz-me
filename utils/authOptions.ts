@@ -57,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({token, user, account, trigger, session, profile}) {
             if (account) {
-                token = Object.assign({}, token, { accessToken: account.access_token });
+                //token = Object.assign({}, token, { accessToken: account.access_token });
             }
             if (account && account.provider === 'google') {
                 try {

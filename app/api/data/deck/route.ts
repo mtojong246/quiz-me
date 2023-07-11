@@ -1,6 +1,7 @@
 import { verifyJwt } from "@/jwt";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 
 const prisma = new PrismaClient();

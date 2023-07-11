@@ -63,6 +63,7 @@ export default function AuthContext({ children }: { children: ReactNode }) {
         return;
     }, [session]);
 
+
     return (
         <AuthenticationContext.Provider value={{...authState, setAuthState, isLoggedIn, isLogin, setIsLogin, isAuthOpen, toggleAuth}}>{children}</AuthenticationContext.Provider>
     )
