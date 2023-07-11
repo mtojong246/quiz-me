@@ -2,10 +2,15 @@ import { PrismaClient } from "@prisma/client";
 import { FolderBasic } from "@/app/context/FolderContext";
 import { NextResponse } from "next/server";
 import { FolderWithId } from "@/app/folders/[slug]/page";
+import { verifyJwt } from "@/jwt";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
+    const accessToken = req.headers.get('Authorization');
+
+    if (!accessToken || !verifyJwt(accessToken)) return NextResponse.json({ errorMessage: "Unauthorized request" }, { status: 401 });
+
     const d = await req.json();
 
     const { folder, id }: { folder: FolderBasic, id: number } = d;
@@ -40,6 +45,10 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
+    const accessToken = req.headers.get('Authorization');
+
+    if (!accessToken || !verifyJwt(accessToken)) return NextResponse.json({ errorMessage: "Unauthorized request" }, { status: 401 });
+
     const d = await req.json();
 
     const { id, folder }: { id: number, folder: FolderWithId } = d;

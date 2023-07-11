@@ -1,9 +1,15 @@
+import { verifyJwt } from "@/jwt";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
+    const accessToken = req.headers.get('Authorization');
+
+    if (!accessToken || !verifyJwt(accessToken)) return NextResponse.json({ errorMessage: "Unauthorized request" }, { status: 401 });
+
     const { id }: { id: number } = await req.json();
 
     const deckData = await prisma.deck.findMany({

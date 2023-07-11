@@ -1,3 +1,4 @@
+import { signJwtAccessToken } from "@/jwt";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
 import { NextResponse } from "next/server";
@@ -24,11 +25,17 @@ export async function POST(req: Request) {
     const isMatch = await bcrypt.compare(password, dbUser.password)
 
     if (isMatch) {
-        return NextResponse.json({
+        const userWithoutPassword = {
             id: dbUser.id,
             username: dbUser.username,
             email: dbUser.email,
-        }, {status: 200})
+        }
+        const accessToken = signJwtAccessToken(userWithoutPassword);
+        const result = {
+            ...userWithoutPassword,
+            accessToken
+        }
+        return NextResponse.json(result, {status: 200})
         
     }
 

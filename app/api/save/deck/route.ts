@@ -1,10 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { DeckBasic } from "@/app/context/DeckContext";
 import { NextResponse } from "next/server";
+import { verifyJwt } from "@/jwt";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
+    const accessToken = req.headers.get('Authorization');
+
+    if (!accessToken || !verifyJwt(accessToken)) return NextResponse.json({ errorMessage: "Unauthorized request" }, { status: 401 });
+
     const d = await req.json();
 
     const { deck, id }: { deck: DeckBasic, id: number } = d;

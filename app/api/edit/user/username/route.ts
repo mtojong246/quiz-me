@@ -1,10 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt';
+import { verifyJwt } from "@/jwt";
 
 const prisma = new PrismaClient();
 
 export async function PUT(req: Request) {
+    const accessToken = req.headers.get('Authorization');
+
+    if (!accessToken || !verifyJwt(accessToken)) return NextResponse.json({ errorMessage: "Unauthorized request" }, { status: 401 });
+
     const d = await req.json();
 
     const { username, password, id } = d;

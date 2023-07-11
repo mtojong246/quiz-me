@@ -69,6 +69,10 @@ export const authOptions: NextAuthOptions = {
                     console.log('error', error);
                 }
             }
+
+            if (account && account.provider === 'facebook') {
+                console.log(profile);
+            }
             if (trigger === 'update') {
                 return { ...token, ...session.user }
             }

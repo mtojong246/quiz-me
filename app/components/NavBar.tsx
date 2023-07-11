@@ -33,6 +33,7 @@ export default function NavBar() {
     const handleLogout = async (e: MouseEvent<HTMLButtonElement>) => {
         await signout();
     }
+    
 
     return (
         <>
@@ -52,7 +53,7 @@ export default function NavBar() {
                 <div><Dropdown /></div>
                 {isLoggedIn ? (
                 <>
-                    <div><UserDropdown letter={data?.username[0]}/></div>
+                    {/* <div><UserDropdown letter={data?.username[0]}/></div> */}
                     <button className='text-white text-sm font-bold bg-[#4255FF] hover:bg-[#0017E6] h-10 px-7 rounded-lg cursor-pointer' onClick={handleLogout}>Log out</button>  
                 </>
                     ) : (

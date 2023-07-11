@@ -110,7 +110,7 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
                             <p>Continue With Google</p>
                         </div>
                     </button>
-                    <button className='w-full rounded-lg border border-slate-150 px-6 py-3 text-reg text-slate-500 font-bold cursor-pointer'>
+                    <button onClick={handleFacebookSignin} className='w-full rounded-lg border border-slate-150 px-6 py-3 text-reg text-slate-500 font-bold cursor-pointer'>
                         <div className='flex justify-center items-center'>
                             <img src='/facebook-icon.svg' alt='facebook' className='h-6 w-6 mr-2' />
                             <p>Continue With Facebook</p>
