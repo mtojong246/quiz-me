@@ -89,7 +89,7 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
     const handleFacebookSignin = async () => {
         await signIn('facebook');
     }
-    
+   
     return (
         <div className='p-4 bg-white'>
                 {!error && popup ? <Alert severity='success' onClose={() => {setPopup(false)}} style={{marginBottom: '16px'}}>You've successfully created an account!</Alert> : null}
@@ -108,12 +108,6 @@ export const Form = ({ toggleAuth, toggleSignin, isLogin }: { toggleAuth: () => 
                         <div className='flex justify-center items-center'>
                             <img src='/google-icon.svg' alt='google' className='h-4 w-4 mr-2.5'/>
                             <p>Continue With Google</p>
-                        </div>
-                    </button>
-                    <button onClick={handleFacebookSignin} className='w-full rounded-lg border border-slate-150 px-6 py-3 text-reg text-slate-500 font-bold cursor-pointer'>
-                        <div className='flex justify-center items-center'>
-                            <img src='/facebook-icon.svg' alt='facebook' className='h-6 w-6 mr-2' />
-                            <p>Continue With Facebook</p>
                         </div>
                     </button>
                 </div>

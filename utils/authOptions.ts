@@ -18,10 +18,6 @@ export const authOptions: NextAuthOptions = {
                 }
             }
         }),
-        FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID as string,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
-        }),
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
@@ -68,10 +64,6 @@ export const authOptions: NextAuthOptions = {
                 } catch (error) {
                     console.log('error', error);
                 }
-            }
-
-            if (account && account.provider === 'facebook') {
-                console.log(profile);
             }
             if (trigger === 'update') {
                 return { ...token, ...session.user }
