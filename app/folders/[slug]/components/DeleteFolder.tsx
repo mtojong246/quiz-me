@@ -5,18 +5,21 @@ import { useRouter } from 'next/navigation';
 import { FolderWithId } from '../page';
 import useDelete from '@/hooks/useDelete';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { FolderContext } from '@/app/context/FolderContext';
 
 export default function DeleteFolder({ isDelete, toggleDelete, folder }: { isDelete: boolean, toggleDelete: () => void, folder: FolderWithId }) {
     const router = useRouter();
     const { deleteFolder } = useDelete();
+    const { folders, setFolders } = useContext(FolderContext);
     const [ isLoading, setIsLoading ] = useState(false);
 
     const handleDelete = async () => {
         setIsLoading(true);
         const response = await deleteFolder({ id: folder.id });
         if (response) {
-            console.log(response);
+            const newFolders = folders.filter(f => f.id !== folder.id);
+            setFolders(newFolders);
             setIsLoading(false);
             return router.push('/latest');
         }

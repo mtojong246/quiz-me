@@ -5,11 +5,11 @@ import Link from 'next/link';
 
 export default function LibraryFolders({ toggleLibrary }: { toggleLibrary: () => void }) {
     const { data } = useContext(AuthenticationContext);
-    const { folders } = useContext(FolderContext);
+    const { folders, toggleFolder } = useContext(FolderContext);
 
     return (
         <>
-            {folders ? (
+            {folders && folders.length ? (
             <>
                 {folders.map(folder => (
                     <Link href={`/folders/${folder.title.replace(/\s+/g, '-').toLowerCase()}`} className="cursor-pointer">
@@ -21,9 +21,9 @@ export default function LibraryFolders({ toggleLibrary }: { toggleLibrary: () =>
                 ))}
             </>
             ) : (
-                <div className='w-full h-full flex flex-col justify-center items-center'>
-                    <p>Your folders will appear here.</p>
-                    <button>Create folder</button>
+                <div className='w-full h-full flex flex-col justify-center items-center py-4'>
+                    <p className='text-slate-500 font-bold'>Your folders will appear here.</p>
+                    <button onClick={() => {toggleLibrary(); toggleFolder()}} className='bg-[#3CCFCF] text-white text-sm font-bold rounded-lg px-5 py-2 mt-4'>Create folder</button>
                 </div>
             )}
         </>

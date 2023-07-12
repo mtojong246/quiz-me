@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -7,10 +8,12 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import FilterIcon from '@mui/icons-material/Filter';
 import Link from 'next/link';
 import { CreateFolder } from './CreateFolder';
+import { useContext } from 'react';
+import { FolderContext } from '../context/FolderContext';
 
 export default function Dropdown() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [ checked, setIsChecked ] = React.useState(false);
+  const { checked, toggleFolder } = useContext(FolderContext);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,9 +22,6 @@ export default function Dropdown() {
     setAnchorEl(null);
   };
 
-  const toggleFolder = () => {
-    setIsChecked(!checked);
-  }
 
   return (
     <>

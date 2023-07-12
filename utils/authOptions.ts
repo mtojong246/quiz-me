@@ -53,9 +53,10 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({token, user, account, trigger, session, profile}) {
             if (account) {
-                //token = Object.assign({}, token, { accessToken: account.access_token });
+                token = Object.assign({}, token, { provider: false });
             }
             if (account && account.provider === 'google') {
+                token = Object.assign({}, token, { provider: true });
                 try {
                     const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/google`, { email: profile?.email, username: profile?.name });
                     if (response) {

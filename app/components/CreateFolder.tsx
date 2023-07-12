@@ -51,6 +51,13 @@ export const CreateFolder = ({ checked, toggleFolder }: { checked: boolean, togg
         return console.log('no user data')
     }
 
+    const resetFolder = () => {
+        setFolder({
+            title: '',
+            description: '',
+        });
+    }
+
 
     return (
         <Fade in={checked}>
@@ -59,7 +66,7 @@ export const CreateFolder = ({ checked, toggleFolder }: { checked: boolean, togg
                 <div className='fixed top-0 bottom-0 right-0 left-0 z-20 bg-white h-screen p-6 sm:top-[50%] sm:left-[50%] sm:translate-x-[-50%] sm:translate-y-[-85%] sm:h-fit sm:w-[640px] sm:rounded-xl'>
                     <div className='flex justify-between items-center mb-6'>
                         <p className='text-xl text-slate-700 font-bold'>Create a new folder</p>
-                        <CloseIcon style={{fontSize: '24px', color: '#595959'}} onClick={toggleFolder} className='cursor-pointer'/>
+                        <CloseIcon style={{fontSize: '24px', color: '#595959'}} onClick={() => {toggleFolder(); resetFolder()}} className='cursor-pointer'/>
                     </div>
                     <input type='text' value={folder.title} onChange={handleTitle} className='w-full bg-slate-100 p-4 text-reg rounded-lg mb-5 text-slate-700' placeholder='Enter a title' />
                     <textarea value={folder.description} onChange={handleDescription} className='h-[60px] p-4 text-reg w-full bg-slate-100 rounded-lg mb-16 text-slate-700' placeholder='Enter a description (optional)' />

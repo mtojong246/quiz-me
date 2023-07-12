@@ -26,17 +26,22 @@ export interface FolderType extends Folder {
 interface FolderState {
     folders: FolderType[];
     setFolders: Dispatch<SetStateAction<FolderType[]>>;
+    checked: boolean;
+    toggleFolder: () => void;
 }
 
 export const FolderContext = createContext<FolderState>({
     folders: [],
     setFolders: () => {},
+    checked: false,
+    toggleFolder: () => {},
 })
 
 export default function FolderProvider({ children }: { children: ReactNode }) {
     const { fetchUserFolders } = useData();
     const { data } = useContext(AuthenticationContext);
     const [ folders, setFolders ] = useState<FolderType[]>([]);
+    const [ checked, setChecked ] = useState(false);
 
     useEffect(() => {
         const fetchFolders = async () => {
@@ -49,7 +54,9 @@ export default function FolderProvider({ children }: { children: ReactNode }) {
         fetchFolders();
     }, [data])
 
+    const toggleFolder = () => setChecked(!checked);
+
     return (
-        <FolderContext.Provider value={{folders, setFolders}}>{children}</FolderContext.Provider>
+        <FolderContext.Provider value={{folders, setFolders, toggleFolder, checked}}>{children}</FolderContext.Provider>
     )
 }

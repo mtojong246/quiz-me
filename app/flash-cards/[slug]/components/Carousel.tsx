@@ -83,7 +83,7 @@ export default function Carousel({ deck, expand, toggleExpand }: { deck: DeckTyp
                     {array.map(i => {
                         let card = cards.find(c => cards.indexOf(c) === (i-1));
                         return (
-                            <Flashcard currentIndex={currentIndex} card={card as CardType} index={i} changeCard={changeCard} setChangeCard={setChangeCard}/>
+                            <Flashcard currentIndex={currentIndex} card={card as CardType} key={i} index={i} changeCard={changeCard} setChangeCard={setChangeCard}/>
                         )
                     })}
                 </div>

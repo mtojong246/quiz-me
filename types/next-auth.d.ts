@@ -19,6 +19,7 @@ declare module "next-auth" {
       username?: string;
       email?: string | null;
       accessToken: string;
+      provider: boolean;
     }
   }
   
