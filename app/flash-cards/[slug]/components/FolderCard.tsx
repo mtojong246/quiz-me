@@ -74,7 +74,7 @@ export default function FolderCard({ deck, folder }: { deck: DeckType, folder: F
         <div className='w-full bg-white flex justify-between items-center p-4'>
             <p className='text-lg text-slate-700 font-bold'>{folder.title}</p>
             <button onClick={handleClick} className='text-lg text-slate-700 px-3 py-1 border border-slate-200 hover:text-[#3CCFCF]'>
-            {isLoading ? <CircularProgress color='inherit'/> : `${isChecked ? <CheckIcon color='inherit' style={style}/> : <AddIcon color='inherit' style={style}/>}`}
+            {isLoading ? <CircularProgress color='inherit'/> : <>{isChecked ? <CheckIcon color='inherit' style={style}/> : <AddIcon color='inherit' style={style}/>}</>}
             </button>
         </div>
     )

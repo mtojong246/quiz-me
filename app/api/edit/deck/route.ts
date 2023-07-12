@@ -13,69 +13,94 @@ export async function PUT(req: Request) {
 
     const d = await req.json();
 
-    const { deck }: { deck: DeckWithId } = d;
+    const { deck, user_id }: { deck: DeckWithId, user_id: number } = d;
 
     const { id, title, description, cards } = deck;
 
-    const updatedDeck = await prisma.deck.update({
+    const oldDeck = await prisma.deck.delete({
         where: { id },
-        data: { title, description },   
+    });
+
+    if (!oldDeck) return NextResponse.json({ errorMessage: "Error deleting old deck" }, { status: 400 })
+
+    const newDeck = await prisma.deck.create({
+        data: { title, description, user_id }
+    });
+
+    if (!newDeck) return NextResponse.json({ errorMessage: "Error creating updated deck" }, { status: 400 })
+
+    const newCards = cards.map(card => {
+        return {
+            term: card.term,
+            definition: card.definition,
+            deck_id: newDeck.id,
+        }
     })
 
-    if (!updatedDeck) return NextResponse.json({ errorMessage: 'Error updating deck' }, { status: 404 });
+    await prisma.card.createMany({
+        data: newCards,
+    })
 
-    const findCard = async(c: CardType) => {
-        try {
-            return await prisma.card.findFirst({
-                where: { id: c.id, deck_id: id }
-            })
-        } catch (error) {
-            console.log(error, 'Error finding card');
-        }
-    }
 
-    const updateOneCard = async(c: CardType) => {
-        try {
-            return await prisma.card.updateMany({
-                where: { id: c.id, deck_id: id },
-                data: {
-                    term: c.term,
-                    definition: c.definition
-                }
-            })
-        } catch (error) {
-            console.log(error, 'Error updating card');
-        }
-    }
+    // const updatedDeck = await prisma.deck.update({
+    //     where: { id },
+    //     data: { title, description },   
+    // })
 
-    const createOneCard = async (c: CardType) => {
-        try {
-            return await prisma.card.create({
-                data: {
-                    term: c.term,
-                    definition: c.definition,
-                    deck_id: id,
-                }
-            })
-        } catch (error) {
-            console.log(error, "Error creating card");
-        }
+    // if (!updatedDeck) return NextResponse.json({ errorMessage: 'Error updating deck' }, { status: 404 });
+
+    // const findCard = async(c: CardType) => {
+    //     try {
+    //         return await prisma.card.findFirst({
+    //             where: { id: c.id, deck_id: id }
+    //         })
+    //     } catch (error) {
+    //         console.log(error, 'Error finding card');
+    //     }
+    // }
+
+    // const updateOneCard = async(c: CardType) => {
+    //     try {
+    //         return await prisma.card.updateMany({
+    //             where: { id: c.id, deck_id: id },
+    //             data: {
+    //                 term: c.term,
+    //                 definition: c.definition
+    //             }
+    //         })
+    //     } catch (error) {
+    //         console.log(error, 'Error updating card');
+    //     }
+    // }
+
+    // const createOneCard = async (c: CardType) => {
+    //     try {
+    //         return await prisma.card.create({
+    //             data: {
+    //                 term: c.term,
+    //                 definition: c.definition,
+    //                 deck_id: id,
+    //             }
+    //         })
+    //     } catch (error) {
+    //         console.log(error, "Error creating card");
+    //     }
         
-    }
+    // }
 
-    const updatedCards = cards.map(async(c) => {
-            const cardExists = await findCard(c);
-            if(!cardExists) {
-                return await createOneCard(c)
-            } else {
-                return await updateOneCard(c)
-            }
-    })
+    // const updatedCards = cards.map(async(c) => {
+    //         const cardExists = await findCard(c);
+    //         if(!cardExists) {
+    //             return await createOneCard(c)
+    //         } else {
+    //             return await updateOneCard(c)
+    //         }
+    // })
 
-    if (!updatedCards) return NextResponse.json({ errorMessage: 'Error updating cards' }, { status: 404 });
+    // if (!updatedCards) return NextResponse.json({ errorMessage: 'Error updating cards' }, { status: 404 });
 
     const updatedDeckWithCards = await prisma.deck.findUnique({
-        where: { id },
+        where: { id: newDeck.id },
         select: { 
             id: true,
             title: true,

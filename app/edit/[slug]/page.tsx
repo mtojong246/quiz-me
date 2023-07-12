@@ -1,6 +1,7 @@
 'use client';
 import { useContext, useState, useEffect, ChangeEvent } from 'react';
 import { DeckContext } from '@/app/context/DeckContext';
+import { AuthenticationContext } from '@/app/context/AuthContext';
 import { DeckBasic } from '@/app/context/DeckContext';
 import { Card } from './components/Card';
 import { useRouter } from 'next/navigation';
@@ -14,7 +15,8 @@ export interface DeckWithId extends DeckBasic {
 export default function Edit({ params }: { params: { slug: string } }) {
     const [ isLoading, setIsLoading ] = useState(false);
     const separatedTitle = params.slug.replace(/-/g, ' ');
-    const { decks, setDecks } = useContext(DeckContext)
+    const { decks, setDecks } = useContext(DeckContext);
+    const { data } = useContext(AuthenticationContext);
     const [ deck, setDeck ] = useState({} as DeckWithId);
     const { editDeck } = useSave();
     const router = useRouter();
@@ -66,9 +68,9 @@ export default function Edit({ params }: { params: { slug: string } }) {
         }
         setIsLoading(true);
         try {
-            const response = await editDeck({ deck });
+            const response = await editDeck({ deck, user_id: data!.id });
             if (response) {
-                const newDecks = decks.filter(deck => deck.id !== response.id);
+                const newDecks = decks.filter(d => d.id !== deck.id);
                 setDecks(newDecks.concat(response))
                 setIsLoading(false);
                 return router.push('/latest');

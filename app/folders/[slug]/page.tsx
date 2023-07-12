@@ -49,7 +49,7 @@ export default function Folders({ params }: { params: { slug: string } }) {
                             <button className='rounded-full bg-white border border-slate-300 p-2'><IosShareIcon style={{fontSize: '24px', color: '#666666'}}/></button>
                             <FolderDropdown folder={folder} setFolder={setFolder}/>
                         </div>
-                        {folder.decks ? (
+                        {folder.decks && folder.decks.length ? (
                             <div className='w-full grid grid-cols-1 sm:grid-cols-2 mt-20 gap-4'>
                             {folder.decks.map((deck, i) => (
                                 <Card key={i} title={deck.title} terms={`${deck.cards ? deck.cards.length : 0}`}/>

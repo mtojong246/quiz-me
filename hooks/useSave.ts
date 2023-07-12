@@ -21,9 +21,9 @@ const useSave = () => {
         }
     }
 
-    const editDeck = async ({ deck }: { deck: DeckBasic }) => {
+    const editDeck = async ({ deck, user_id }: { deck: DeckBasic, user_id: number }) => {
         try {
-            const response = await axios.put(`${process.env.NEXTAUTH_URL}/api/edit/deck`, { deck }, config);
+            const response = await axios.put(`${process.env.NEXTAUTH_URL}/api/edit/deck`, { deck, user_id }, config);
             return response.data;
         } catch (error) {
             console.log('error', error);
