@@ -1,6 +1,5 @@
 'use client';
 import AddIcon from '@mui/icons-material/Add';
-import IosShareIcon from '@mui/icons-material/IosShare';
 import { useState, useEffect, useContext } from 'react';
 import { FolderWithDecks } from '@/app/context/FolderContext';
 import { FolderContext } from '@/app/context/FolderContext';
@@ -46,7 +45,6 @@ export default function Folders({ params }: { params: { slug: string } }) {
                         <p className='text-reg text-slate-700 mb-4'>{folder.description ? folder.description : ''}</p>
                         <div className='flex justify-start items-center gap-3 mb-5'>
                             <button onClick={toggleChecked} className='rounded-full bg-white border border-slate-300 p-2'><AddIcon style={{fontSize: '24px', color: '#666666'}}/></button>
-                            <button className='rounded-full bg-white border border-slate-300 p-2'><IosShareIcon style={{fontSize: '24px', color: '#666666'}}/></button>
                             <FolderDropdown folder={folder} setFolder={setFolder}/>
                         </div>
                         {folder.decks && folder.decks.length ? (
