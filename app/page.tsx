@@ -16,12 +16,12 @@ export default function Home() {
   }, [isLoggedIn])
 
   return (
-    <>
+    <div className='w-full bg-white min-h-screen'>
       <Header />
-      <div className='w-full p-20 bg-white'>
+      <div className='w-full p-20'>
         <p className='max-w-screen-lg m-auto text-xl md:text-xxl text-slate-700 font-bold text-center'>90% of students who use QuizMe report receiving higher grades</p>
       </div>
-    </>
+    </div>
   )
 }
 
