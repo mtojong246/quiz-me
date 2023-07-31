@@ -6,7 +6,7 @@
 
 - [Repo](https://github.com/Rohit19060/<project-name> "QuizMe Repo")
 
-- [Live](<Homepage url> "Live View")
+- [Live](https://quiz-me-mtojong246.vercel.app/ "Live View")
 
 ## Screenshots
 
