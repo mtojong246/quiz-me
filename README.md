@@ -4,7 +4,7 @@
 
 ## Links
 
-- [Repo](https://github.com/Rohit19060/<project-name> "QuizMe Repo")
+- [Repo](https://github.com/mtojong246/quiz-me "QuizMe Repo")
 
 - [Live](https://quiz-me-mtojong246.vercel.app/ "Live View")
 
