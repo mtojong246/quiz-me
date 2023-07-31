@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="left">QuizMe</h1>
 
-## Getting Started
+<p align="left">A full stack web app inspired by Quizlet, which provides students a tool for creating and reviewing digital flashcards. Includes "Flashcard" and "Learn" modes.</p>
 
-First, run the development server:
+## Links
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- [Repo](https://github.com/Rohit19060/<project-name> "QuizMe Repo")
+
+- [Live](<Homepage url> "Live View")
+
+## Screenshots
+
+![Create](public/quiz_me_create.png "Create")
+
+![Flashcard Mode](public/quiz_me_flashcards.png "Flashcard Mode")
+
+![Learn Mode](public/quiz_me_learn.png "Learn Mode")
+
+## Get Started
+
+1. Clone the repository 
+
+```Bash
+git clone https://github.com/mtojong246/quiz-me.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Change the working directory 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```Bash
+cd quiz-me
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Add Environment Variable path of this directory
 
-## Learn More
+4. Run the app using terminal 
 
-To learn more about Next.js, take a look at the following resources:
+```Bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Create, edit and delete flaschard sets
+- Review flashcard sets in "Flashcard Mode" or "Learn Mode" 
+- Organize created sets into folders 
+- Make changes to username, email and password in Profile Settings 
+- Utilize social sign-in with Google OAuth 
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Built With
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Next.js
+- TypeScript
+- PostgreSQL
+- Prisma
+- Supabase
+- Tailwind CSS
+- Material UI
+- NextAuth
+
+## Author
+
+**Melanie Tojong**
+
+- [Github](https://github.com/mtojong246 "Melanie Tojong")
+- [Email](mailto:mtojong@gmail.com?subject=Hi "Hi!")
+- [Website](https://melanie-tojong.dev "Welcome")
+
+## 🤝 Support
+
+Contributions, issues, and feature requests are welcome!
+
+Give a ⭐️ if you like this project!
